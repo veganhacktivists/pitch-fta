@@ -15,9 +15,21 @@ export interface User {
   updated_at: DateTime
 }
 
+export interface Idea {
+  id: number
+  text: string
+  num_votes: number
+  user_id: number
+  created_at: DateTime
+  updated_at: DateTime
+}
+
 export type InertiaSharedProps<T = Record<string, unknown>> = T & {
   auth: {
     user: User
+  }
+  flash: {
+    message?: string
   }
   user: User
   errorBags: any

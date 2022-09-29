@@ -10,12 +10,12 @@ const AuthenticatedLayout: ParentComponent = ({ children }) => {
   } = useTypedPage()
 
   return (
-    <div className="h-screen w-screen bg-gray-100 flex flex-col">
-      <nav className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-gray-100">
+      <nav className="border-b border-gray-100 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 justify-between">
             <div className="flex">
-              <div className="shrink-0 flex items-center">
+              <div className="flex shrink-0 items-center">
                 <Link href="/">
                   <ApplicationLogo className="block h-9 w-auto text-gray-500" />
                 </Link>
@@ -29,7 +29,7 @@ const AuthenticatedLayout: ParentComponent = ({ children }) => {
         </div>
       </nav>
 
-      <main className="flex h-full">{children}</main>
+      <main className="flex h-full overflow-auto">{children}</main>
     </div>
   )
 }
