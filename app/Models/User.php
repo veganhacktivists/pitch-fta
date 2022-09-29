@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $attributes = ['num_votes' => 0];
+
     protected $fillable = ['name', 'email', 'password'];
 
     protected $hidden = ['password', 'remember_token'];
