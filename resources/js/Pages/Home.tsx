@@ -10,7 +10,7 @@ const HomePage = () => {
       <div className="flex w-full flex-col items-center justify-around">
         <Link href={route('ideas.create')}>Submit idea</Link>
         <Link href={route('ideas.index')}>View submissions</Link>
-        <button>Earn more votes</button>
+        <Link href={route('earn')}>Earn more votes</Link>
       </div>
     </AuthenticatedLayout>
   )

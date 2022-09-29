@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EarnVotesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IdeasController;
 use App\Http\Controllers\RouteUserBasedOnEmailController;
@@ -28,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
         'create',
         'store',
     ]);
+
+    Route::get('/earn', EarnVotesController::class)->name('earn');
 });
 
 require __DIR__ . '/auth.php';
