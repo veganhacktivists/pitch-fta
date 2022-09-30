@@ -24,6 +24,18 @@ export interface Idea {
   updated_at: DateTime
 }
 
+export interface TriviaQuestion {
+  id: number
+  text: string
+  answers: TriviaAnswer[]
+}
+
+export interface TriviaAnswer {
+  id: number
+  text: string
+  trivia_answer: number
+}
+
 export type InertiaSharedProps<T = Record<string, unknown>> = T & {
   auth: {
     user: User

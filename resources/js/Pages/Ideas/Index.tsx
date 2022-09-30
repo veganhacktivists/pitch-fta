@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Link, useForm } from '@inertiajs/inertia-react'
+import { useForm } from '@inertiajs/inertia-react'
 import { Idea } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Modal } from '@/Components/Modal'
@@ -10,6 +10,7 @@ import { PrimaryButton } from '@/Components/PrimaryButton'
 import { TextArea } from '@/Components/Forms/TextArea'
 import { InputError } from '@/Components/InputError'
 import useTypedPage from '@/Hooks/useTypedPage'
+import { Navbar } from '@/Components/Navbar'
 
 interface IdeasIndexPageProps {
   ideas: Idea[]
@@ -68,23 +69,16 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
 
   return (
     <AuthenticatedLayout>
-      <div className="flex w-full flex-col">
-        <div className="flex justify-between gap-4 p-4">
-          <div>
-            <Link href={route('home')}>Back</Link>
-          </div>
-          <div>
-            <button onClick={toggleCreateModal}>Submit idea</button>
-          </div>
-        </div>
-        {message && <div>{message}</div>}
-        <div className="h-full overflow-auto">
-          <ul>
-            {ideas.map((idea) => (
-              <li key={idea.id}>{idea.text}</li>
-            ))}
-          </ul>
-        </div>
+      <Navbar backRoute="home">
+        <button onClick={toggleCreateModal}>Submit idea</button>
+      </Navbar>
+      {message && <div>{message}</div>}
+      <div className="h-full overflow-auto">
+        <ul>
+          {ideas.map((idea) => (
+            <li key={idea.id}>{idea.text}</li>
+          ))}
+        </ul>
       </div>
       <Modal isOpen={isCreateModalOpen} setIsOpen={setIsCreateModalOpen}>
         <form onSubmit={onSubmitIdea} className="flex flex-col">

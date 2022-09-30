@@ -29,7 +29,9 @@ const AuthenticatedLayout: ParentComponent = ({ children }) => {
         </div>
       </nav>
 
-      <main className="flex h-full overflow-auto">{children}</main>
+      <main className="flex h-full w-full flex-col overflow-auto">
+        {children}
+      </main>
     </div>
   )
 }

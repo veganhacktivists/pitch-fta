@@ -4,6 +4,7 @@ use App\Http\Controllers\EarnVotesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IdeasController;
 use App\Http\Controllers\RouteUserBasedOnEmailController;
+use App\Http\Controllers\TriviaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
     ]);
 
     Route::get('/earn', EarnVotesController::class)->name('earn');
+
+    Route::get('/trivia', TriviaController::class)->name('trivia.question');
+    Route::post('/trivia', TriviaController::class)->name('trivia.answer');
 });
 
 require __DIR__ . '/auth.php';
