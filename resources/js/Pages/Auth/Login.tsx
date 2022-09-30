@@ -54,7 +54,7 @@ const LoginPage = () => {
         </div>
 
         <div className="mt-4">
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <InputLabel htmlFor="password">Pin</InputLabel>
 
           <TextInput
             type="password"
@@ -68,10 +68,10 @@ const LoginPage = () => {
           <InputError message={errors.password} className="mt-2" />
         </div>
 
-        <div className="flex items-center justify-end mt-4">
+        <div className="mt-4 flex items-center justify-end">
           <Link
             href={route('password.request')}
-            className="underline text-sm text-gray-600 hover:text-gray-900"
+            className="text-sm text-gray-600 underline hover:text-gray-900"
           >
             Forgot your password?
           </Link>

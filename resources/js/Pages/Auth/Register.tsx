@@ -53,14 +53,13 @@ const RegisterPage = () => {
           <InputError message={errors.email} className="mt-2" />
         </div>
         <div className="mt-4">
-          <InputLabel htmlFor="name">Name</InputLabel>
+          <InputLabel htmlFor="name">Name (optional)</InputLabel>
 
           <TextInput
             name="name"
             value={data.name}
             className="mt-1 block w-full"
             autoComplete="name"
-            required
             setData={setData}
           />
 
@@ -68,7 +67,7 @@ const RegisterPage = () => {
         </div>
 
         <div className="mt-4">
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
 
           <TextInput
             type="password"
@@ -77,16 +76,21 @@ const RegisterPage = () => {
             className="mt-1 block w-full"
             autoComplete="new-password"
             setData={setData}
+            pattern="[0-9]*"
+            inputMode="numeric"
             required
+            min={4}
+            max={4}
+            title="Please enter a four-digit pin"
           />
 
           <InputError message={errors.password} className="mt-2" />
         </div>
 
-        <div className="flex items-center justify-end mt-4">
+        <div className="mt-4 flex items-center justify-end">
           <Link
             href={route('login')}
-            className="underline text-sm text-gray-600 hover:text-gray-900"
+            className="text-sm text-gray-600 underline hover:text-gray-900"
           >
             Already registered?
           </Link>

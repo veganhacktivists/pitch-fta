@@ -10,7 +10,7 @@ const EarnVotesPage = () => {
   return (
     <AuthenticatedLayout>
       <Head title="Earn votes" />
-      <Navbar backRoute="home">hi</Navbar>
+      <Navbar backRoute="home" />
       <div className="flex h-full flex-col items-center justify-around">
         <Link href={route('trivia.question')}>Trivia</Link>
         <Link href={route('home')}>Scan QR Code</Link>

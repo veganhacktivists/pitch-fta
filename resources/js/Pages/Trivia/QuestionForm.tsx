@@ -40,7 +40,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
 
       <form className="mx-4" onSubmit={onSubmit}>
         <RadioGroup value={data.answer_id} onChange={setSelectedAnswer}>
-          <RadioGroup.Label className="sr-only"> Server size </RadioGroup.Label>
+          <RadioGroup.Label className="sr-only">Answer</RadioGroup.Label>
           <div className="space-y-4">
             {question.answers.map((answer) => (
               <RadioGroup.Option
@@ -82,7 +82,9 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
         </RadioGroup>
         {errors.answer_id && <InputError message={errors.answer_id} />}
         <div className="text-right">
-          <PrimaryButton disabled={processing}>Submit</PrimaryButton>
+          <PrimaryButton disabled={processing || data.answer_id === 0}>
+            Submit
+          </PrimaryButton>
         </div>
       </form>
     </>
