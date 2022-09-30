@@ -33,7 +33,6 @@ export interface TriviaQuestion {
 export interface TriviaAnswer {
   id: number
   text: string
-  trivia_answer: number
 }
 
 export type InertiaSharedProps<T = Record<string, unknown>> = T & {
