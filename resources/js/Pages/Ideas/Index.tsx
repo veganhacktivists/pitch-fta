@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
-import { useForm } from '@inertiajs/inertia-react'
+import { useLongPress } from 'use-long-press'
+import { Head, useForm } from '@inertiajs/inertia-react'
 import { Idea } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Modal } from '@/Components/Modal'
@@ -11,6 +12,7 @@ import { TextArea } from '@/Components/Forms/TextArea'
 import { InputError } from '@/Components/InputError'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { Navbar } from '@/Components/Navbar'
+import { CreateModal } from './CreateModal'
 
 interface IdeasIndexPageProps {
   ideas: Idea[]
@@ -21,13 +23,9 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
   ideas,
   isCreateModalOpen: isModalOpen = false,
 }) => {
-  const route = useRoute()
-  const { post, data, setData, errors, reset } = useForm({
-    text: '',
-  })
-
   const {
     props: {
+      auth: { user },
       flash: { message },
     },
   } = useTypedPage()
@@ -38,37 +36,37 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     toggle: toggleCreateModal,
   } = useToggleState(isModalOpen)
 
-  const submitForm = useCallback(() => {
-    post(route('ideas.store'), {
-      onSuccess() {
-        setIsCreateModalOpen(false)
-        reset()
-      },
-    })
-  }, [post, reset, route, setIsCreateModalOpen])
+  const route = useRoute()
+  const { post, data, setData } = useForm({
+    ideaId: 0,
+  })
 
-  const onSubmitIdea = useCallback<React.FormEventHandler<HTMLFormElement>>(
-    (e) => {
-      e.preventDefault()
-      submitForm()
-    },
-    [submitForm],
-  )
-
-  const detectEnterSubmission = useCallback<
-    React.KeyboardEventHandler<HTMLTextAreaElement>
-  >(
-    (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault()
-        submitForm()
+  const onVote = useLongPress(
+    () => {
+      if (data.ideaId !== 0) {
+        post(route('ideas.vote', data.ideaId))
       }
     },
-    [submitForm],
+    {
+      onStart(e, { context }) {
+        if (!(e.target instanceof HTMLElement)) return
+        if (!(typeof context === 'number')) return
+
+        setData({
+          ideaId: context,
+        })
+      },
+      onFinish() {
+        setData({
+          ideaId: 0,
+        })
+      },
+    },
   )
 
   return (
     <AuthenticatedLayout>
+      <Head title="Ideas" />
       <Navbar backRoute="home">
         <button onClick={toggleCreateModal}>Submit idea</button>
       </Navbar>
@@ -76,26 +74,20 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
       <div className="h-full overflow-auto">
         <ul>
           {ideas.map((idea) => (
-            <li key={idea.id}>{idea.text}</li>
+            <li key={idea.id}>
+              {user.num_votes > 0 ? (
+                <button {...onVote(idea.id)}>{idea.text}</button>
+              ) : (
+                idea.text
+              )}
+            </li>
           ))}
         </ul>
       </div>
-      <Modal isOpen={isCreateModalOpen} setIsOpen={setIsCreateModalOpen}>
-        <form onSubmit={onSubmitIdea} className="flex flex-col">
-          <InputLabel htmlFor="text">Your idea</InputLabel>
-          <TextArea
-            name="text"
-            id="text"
-            value={data.text}
-            setData={setData}
-            maxLength={256}
-            rows={1}
-            onKeyDown={detectEnterSubmission}
-          />
-          <InputError message={errors.text} />
-          <PrimaryButton type="submit">Submit</PrimaryButton>
-        </form>
-      </Modal>
+      <CreateModal
+        isOpen={isCreateModalOpen}
+        setIsOpen={setIsCreateModalOpen}
+      />
     </AuthenticatedLayout>
   )
 }

@@ -31,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
         'store',
     ]);
 
+    Route::post('/ideas/{idea}/vote', [IdeasController::class, 'vote'])->name(
+        'ideas.vote'
+    );
+
     Route::get('/earn', EarnVotesController::class)->name('earn');
 
     Route::get('/trivia', TriviaController::class)->name('trivia.question');

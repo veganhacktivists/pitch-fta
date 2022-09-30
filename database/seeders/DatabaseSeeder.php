@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Idea;
 use App\Models\TriviaAnswer;
 use App\Models\TriviaQuestion;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +18,10 @@ class DatabaseSeeder extends Seeder
                 'answers'
             )
             ->has(TriviaAnswer::factory(3), 'answers')
+            ->create();
+
+        User::factory(5)
+            ->has(Idea::factory(3))
             ->create();
     }
 }

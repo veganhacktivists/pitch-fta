@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->hasMany(Idea::class);
     }
 
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     public function answeredQuestions(): HasMany
     {
         return $this->hasMany(TriviaAnsweredQuestion::class);
@@ -36,5 +41,18 @@ class User extends Authenticatable
     public function scopeHasAccount(Builder $query, string $email): bool
     {
         return $query->where('email', $email)->exists();
+    }
+
+    public function castVote(Idea $idea)
+    {
+        if ($this->num_votes <= 0) {
+            return;
+        }
+
+        $this->votes()->create([
+            'idea_id' => $idea->id,
+        ]);
+
+        self::where('id', $this->id)->decrement('num_votes');
     }
 }

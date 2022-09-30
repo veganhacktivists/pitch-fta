@@ -12,14 +12,14 @@ class IdeasController extends Controller
     public function index()
     {
         return Inertia::render('Ideas/Index', [
-            'ideas' => Idea::all(),
+            'ideas' => Idea::orderByVotes()->get(),
         ]);
     }
 
     public function create()
     {
         return Inertia::render('Ideas/Index', [
-            'ideas' => Idea::all(),
+            'ideas' => Idea::orderByVotes()->get(),
             'isCreateModalOpen' => true,
         ]);
     }
@@ -39,5 +39,12 @@ class IdeasController extends Controller
         return redirect()
             ->route('ideas.index')
             ->with('message', 'Your idea has been submitted!');
+    }
+
+    public function vote(Request $request, Idea $idea)
+    {
+        Auth::user()->castVote($idea);
+
+        return redirect()->back();
     }
 }
