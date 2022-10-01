@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class);
     }
 
+    public function doodles(): HasMany
+    {
+        return $this->hasMany(Doodle::class);
+    }
+
     public function answeredQuestions(): HasMany
     {
         return $this->hasMany(TriviaAnsweredQuestion::class);

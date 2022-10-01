@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class IdeasController extends Controller
+class IdeaController extends Controller
 {
     public function index()
     {

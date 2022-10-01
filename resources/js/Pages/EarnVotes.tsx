@@ -14,7 +14,7 @@ const EarnVotesPage = () => {
       <div className="flex h-full flex-col items-center justify-around">
         <Link href={route('trivia.question')}>Trivia</Link>
         <Link href={route('home')}>Scan QR Code</Link>
-        <Link href={route('home')}>Submit a doodle</Link>
+        <Link href={route('doodles.index')}>Submit a doodle</Link>
         <Link href={route('home')}>Share the app</Link>
       </div>
     </AuthenticatedLayout>

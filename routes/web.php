@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\DoodleController;
 use App\Http\Controllers\EarnVotesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\IdeasController;
+use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\RouteUserBasedOnEmailController;
 use App\Http\Controllers\TriviaController;
 use Illuminate\Support\Facades\Route;
@@ -25,15 +26,22 @@ Route::post('/', RouteUserBasedOnEmailController::class)->name(
 );
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('/ideas', IdeasController::class)->only([
+    Route::resource('/ideas', IdeaController::class)->only([
         'index',
         'create',
         'store',
     ]);
 
-    Route::post('/ideas/{idea}/vote', [IdeasController::class, 'vote'])->name(
+    Route::post('/ideas/{idea}/vote', [IdeaController::class, 'vote'])->name(
         'ideas.vote'
     );
+
+    Route::resource('/doodles', DoodleController::class)->only([
+        'index',
+        'create',
+        'store',
+        'show',
+    ]);
 
     Route::get('/earn', EarnVotesController::class)->name('earn');
 

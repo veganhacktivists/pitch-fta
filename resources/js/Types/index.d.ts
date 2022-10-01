@@ -24,15 +24,27 @@ export interface Idea {
   updated_at: DateTime
 }
 
+export interface Doodle {
+  id: number
+  path: string
+  user_id: number
+  created_at: DateTime
+  updated_at: DateTime
+}
+
 export interface TriviaQuestion {
   id: number
   text: string
   answers: TriviaAnswer[]
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 export interface TriviaAnswer {
   id: number
   text: string
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 export type InertiaSharedProps<T = Record<string, unknown>> = T & {
