@@ -91,13 +91,20 @@ const DoodlesCreatePage = () => {
   )
 
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+      backRoute="doodles.index"
+      renderNav={() => (
+        <PrimaryButton type="submit" form="doodle-form">
+          Submit
+        </PrimaryButton>
+      )}
+    >
       <Head title="New Doodle" />
-      <form onSubmit={onSubmitDoodle} className="flex h-full flex-col">
-        <Navbar backRoute="doodles.index">
-          <PrimaryButton type="submit">Submit</PrimaryButton>
-        </Navbar>
-
+      <form
+        onSubmit={onSubmitDoodle}
+        className="flex h-full flex-col"
+        id="doodle-form"
+      >
         <div className="flex h-full w-full justify-center">
           <div className="grid w-24 grid-cols-2 content-start justify-around gap-2 p-2">
             <button

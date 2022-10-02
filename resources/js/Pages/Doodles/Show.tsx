@@ -1,6 +1,5 @@
 import React from 'react'
 import { Head } from '@inertiajs/inertia-react'
-import { Navbar } from '@/Components/Navbar'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Doodle } from '@/Types'
 
@@ -10,9 +9,8 @@ interface DoodlesShowPageProps {
 
 const DoodlesShowPage: React.FC<DoodlesShowPageProps> = ({ doodle }) => {
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout backRoute="doodles.index">
       <Head title="Doodle" />
-      <Navbar backRoute="doodles.index" />
 
       <div className="flex h-full w-full">
         <img

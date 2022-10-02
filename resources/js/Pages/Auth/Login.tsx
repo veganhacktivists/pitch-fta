@@ -62,6 +62,12 @@ const LoginPage = () => {
             value={data.password}
             className="mt-1 block w-full"
             autoComplete="current-password"
+            inputMode="numeric"
+            required
+            minLength={4}
+            maxLength={4}
+            pattern="[0-9]{4}"
+            title="Please enter your four-digit pin"
             setData={setData}
           />
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Head, Link } from '@inertiajs/inertia-react'
-import { Navbar } from '@/Components/Navbar'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
 import { Doodle } from '@/Types'
@@ -13,11 +12,11 @@ const DoodlesIndexPage: React.FC<DoodlesIndexPageProps> = ({ doodles }) => {
   const route = useRoute()
 
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+      backRoute="earn"
+      renderNav={() => <Link href={route('doodles.create')}>New doodle</Link>}
+    >
       <Head title="Doodles" />
-      <Navbar backRoute="earn">
-        <Link href={route('doodles.create')}>New doodle</Link>
-      </Navbar>
 
       <div className="grid grid-cols-2">
         {doodles.map((doodle) => {

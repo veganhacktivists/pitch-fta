@@ -6,7 +6,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { useToggleState } from '@/Hooks/useToggleState'
 import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
-import { Navbar } from '@/Components/Navbar'
 import { CreateModal } from './CreateModal'
 
 interface IdeasIndexPageProps {
@@ -60,11 +59,11 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
   )
 
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+      backRoute="home"
+      renderNav={() => <button onClick={toggleCreateModal}>Submit idea</button>}
+    >
       <Head title="Ideas" />
-      <Navbar backRoute="home">
-        <button onClick={toggleCreateModal}>Submit idea</button>
-      </Navbar>
       {message && <div>{message}</div>}
       <div className="h-full overflow-auto">
         <ul>

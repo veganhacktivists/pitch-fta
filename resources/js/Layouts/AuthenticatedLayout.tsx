@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import ApplicationLogo from '@/Components/ApplicationLogo'
 import useTypedPage from '@/Hooks/useTypedPage'
+import { Navbar } from '@/Components/Navbar'
 
-const AuthenticatedLayout: ParentComponent = ({ children }) => {
+interface AuthenticatedLayoutProps {
+  backRoute?: string
+  renderNav?: () => ReactNode
+}
+
+const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
+  children,
+  backRoute,
+  renderNav,
+}) => {
   const {
     props: { auth },
   } = useTypedPage()
@@ -30,6 +40,9 @@ const AuthenticatedLayout: ParentComponent = ({ children }) => {
       </nav>
 
       <main className="flex h-full w-full flex-col overflow-auto">
+        {(backRoute || renderNav) && (
+          <Navbar backRoute={backRoute}>{renderNav?.()}</Navbar>
+        )}
         {children}
       </main>
     </div>

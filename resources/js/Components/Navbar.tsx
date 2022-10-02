@@ -4,7 +4,7 @@ import { ParentComponent } from '@/Types/components'
 import useRoute from '@/Hooks/useRoute'
 
 interface NavbarProps {
-  backRoute: string
+  backRoute?: string
 }
 
 export const Navbar: ParentComponent<NavbarProps> = ({
@@ -15,9 +15,7 @@ export const Navbar: ParentComponent<NavbarProps> = ({
 
   return (
     <div className="flex justify-between gap-4 p-4">
-      <div>
-        <Link href={route(backRoute)}>Back</Link>
-      </div>
+      <div>{backRoute && <Link href={route(backRoute)}>Back</Link>}</div>
       <div>{children}</div>
     </div>
   )

@@ -76,11 +76,11 @@ const RegisterPage = () => {
             className="mt-1 block w-full"
             autoComplete="new-password"
             setData={setData}
-            pattern="[0-9]*"
             inputMode="numeric"
             required
-            min={4}
-            max={4}
+            minLength={4}
+            maxLength={4}
+            pattern="[0-9]{4}"
             title="Please enter a four-digit pin"
           />
 
