@@ -7,7 +7,7 @@ const WelcomePage = () => {
   const route = useRoute()
 
   return (
-    <div className="screen-portrait h-screen">
+    <div className="h-screen">
       <Head title="Welcome" />
       <div className="flex h-full flex-col justify-between">
         <img src="/sprites/welcome-splash.png" className="w-screen" alt="" />
