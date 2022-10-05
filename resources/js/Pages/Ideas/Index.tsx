@@ -84,7 +84,10 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
         </div>
       ) : (
         <div className="nes-container is-rounded is-dark text-center">
-          <p>You have {user.num_votes} votes left.</p>
+          <p>
+            You have {user.num_votes} vote{user.num_votes === 1 ? '' : 's'}{' '}
+            left.
+          </p>
         </div>
       )}
 
