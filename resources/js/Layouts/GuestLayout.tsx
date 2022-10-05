@@ -1,19 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
 
 export const GuestLayout: ParentComponent = ({ children }) => {
-  useEffect(() => {
-    try {
-      window.screen.orientation.lock('portrait')
-    } catch (e) {
-      // not available on device
-    }
-  }, [])
-
   return (
-    <div className="street flex h-screen flex-col overflow-auto">
+    <div className="street flex h-screen flex-col overflow-hidden">
       <div className="mx-auto flex items-center p-4 align-middle">
         <Link href="/" className="hover:no-underline">
           <ApplicationLogo className="m-0 pt-2 text-xl" />

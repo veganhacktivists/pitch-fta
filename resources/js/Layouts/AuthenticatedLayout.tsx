@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode } from 'react'
 import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
@@ -7,26 +7,14 @@ import useRoute from '@/Hooks/useRoute'
 interface AuthenticatedLayoutProps {
   backRoute?: string
   renderNav?: () => ReactNode
-  orientation?: OrientationLockType
 }
 
 const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
   children,
   backRoute,
   renderNav,
-  orientation,
 }) => {
   const route = useRoute()
-
-  useEffect(() => {
-    if (orientation) {
-      try {
-        window.screen.orientation.lock(orientation)
-      } catch (e) {
-        // not available on device
-      }
-    }
-  }, [orientation])
 
   return (
     <div className="street flex h-screen flex-col overflow-hidden">
