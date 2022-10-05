@@ -30,7 +30,7 @@ class TriviaController extends Controller
 
         $answer = TriviaAnswer::find($request->input('answer_id'));
         if ($answer->is_correct) {
-            User::where('id', $user->id)->increment('num_votes');
+            User::where('id', $user->id)->awardVotes(1);
 
             session()->flash('message', "Correct! You've earned a new vote.");
         } else {

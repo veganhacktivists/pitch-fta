@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $query->where('email', $email)->exists();
     }
 
+    public function awardVotes(int $numVotes)
+    {
+        return $this->increment('num_votes', $numVotes);
+    }
+
     public function castVote(Idea $idea)
     {
         if ($this->num_votes <= 0) {

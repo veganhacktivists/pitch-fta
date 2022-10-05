@@ -10,6 +10,8 @@ use Inertia\Inertia;
 
 class DoodleController extends Controller
 {
+    const NUM_VOTES_ON_FIRST_DOODLE = 3;
+
     public function index()
     {
         return Inertia::render('Doodles/Index', [
@@ -27,13 +29,21 @@ class DoodleController extends Controller
         $request->validate([
             'doodle' => ['required', File::image()],
         ]);
+
         $user = Auth::user();
 
-        $doodlePath = $request->file('doodle')->store('img');
-
         $doodle = $user->doodles()->create([
-            'path' => $doodlePath,
+            'path' => $request->file('doodle')->store('img'),
         ]);
+
+        // First doodle
+        if ($user->doodles()->count() === 1) {
+            $user->awardVotes(self::NUM_VOTES_ON_FIRST_DOODLE);
+            session()->flash(
+                'message',
+                'Thanks for submitting a doodle! You earned three more votes.'
+            );
+        }
 
         return redirect()->route('doodles.show', $doodle->id);
     }

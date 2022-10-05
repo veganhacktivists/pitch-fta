@@ -25,7 +25,7 @@ const DoodlesIndexPage: React.FC<DoodlesIndexPageProps> = ({ doodles }) => {
     >
       <Head title="Doodles" />
 
-      <div className="grid h-full gap-2 overflow-auto [image-rendering:auto]">
+      <div className="flex h-full flex-col gap-2 overflow-auto [image-rendering:auto]">
         {doodles.map((doodle) => {
           const doesBelongToUser = user.id === doodle.user_id
 

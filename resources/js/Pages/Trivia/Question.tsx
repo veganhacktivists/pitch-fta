@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { Head } from '@inertiajs/inertia-react'
 import { TriviaQuestion } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { QuestionForm } from './QuestionForm'
-import useTypedPage from '@/Hooks/useTypedPage'
 import { VoteCount } from '@/Components/VoteCount'
+import { Alert } from '@/Components/Alert'
 
 interface TriviaQuestionPageProps {
   question: TriviaQuestion
@@ -12,32 +12,10 @@ interface TriviaQuestionPageProps {
 const TriviaQuestionPage: React.FC<TriviaQuestionPageProps> = ({
   question,
 }) => {
-  const {
-    props: {
-      flash: { message },
-    },
-  } = useTypedPage()
-
-  const [alert, setAlert] = useState(message)
-  const onDismissAlert = useCallback(() => {
-    setAlert('')
-  }, [])
-
-  useEffect(() => {
-    setAlert(message)
-  }, [question, message])
-
   return (
     <AuthenticatedLayout backRoute="home" renderNav={() => <VoteCount />}>
       <Head title={question ? question.text : 'Trivia'} />
-      {alert && (
-        <div className="nes-container is-rounded is-dark relative flex items-center text-center">
-          <p className="px-4">{alert}</p>
-          <button className="absolute right-4" onClick={onDismissAlert}>
-            <i className="nes-icon close is-small before:!text-white" />
-          </button>
-        </div>
-      )}
+      <Alert observable={question} />
       {question && <QuestionForm question={question} />}
       {!question && <p>No questions left</p>}
     </AuthenticatedLayout>
