@@ -1,3 +1,74 @@
+@import "./nes.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*:focus {
+  @apply !outline-none !ring-0;
+}
+
+body {
+  image-rendering: pixelated;
+}
+
+.street {
+  background-position: top left;
+  background-image: url(/sprites/street.png);
+}
+
+.sidewalk {
+  background-position: top left;
+  background-image: url(/sprites/sidewalk.png);
+}
+
+.nes-container.is-dark {
+  @apply street;
+}
+
+.nes-container.is-dark .title {
+  @apply street;
+}
+
+.rounded-4px {
+  clip-path: polygon(
+    0px 8px,
+    4px 8px,
+    4px 4px,
+    8px 4px,
+    8px 0px,
+    calc(100% - 8px) 0px,
+    calc(100% - 8px) 4px,
+    calc(100% - 4px) 4px,
+    calc(100% - 4px) 8px,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    8px calc(100% - 4px),
+    4px calc(100% - 4px),
+    4px calc(100% - 8px),
+    0px calc(100% - 8px)
+
+  );
+}
+
+.rounded-2px {
+  clip-path: polygon(
+    0px 4px,
+    4px 4px,
+    4px 0px,
+    calc(100% - 4px) 0px,
+    calc(100% - 4px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 4px),
+    0px calc(100% - 4px)
+  );
+}

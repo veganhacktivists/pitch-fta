@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::post('/', RouteUserBasedOnEmailController::class)->name(
+Route::get('/continue', RouteUserBasedOnEmailController::class)->name(
+    'route_based_on_email.show'
+);
+Route::post('/continue', RouteUserBasedOnEmailController::class)->name(
     'route_based_on_email'
 );
 
@@ -42,8 +45,6 @@ Route::middleware(['auth'])->group(function () {
         'store',
         'show',
     ]);
-
-    Route::get('/earn', EarnVotesController::class)->name('earn');
 
     Route::get('/trivia', TriviaController::class)->name('trivia.question');
     Route::post('/trivia', TriviaController::class)->name('trivia.answer');

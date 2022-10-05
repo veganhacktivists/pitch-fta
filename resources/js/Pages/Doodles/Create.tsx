@@ -1,10 +1,9 @@
 import { Head, useForm } from '@inertiajs/inertia-react'
+import classNames from 'classnames'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import colors from 'tailwindcss/colors'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Navbar } from '@/Components/Navbar'
 import useRoute from '@/Hooks/useRoute'
-import { PrimaryButton } from '@/Components/PrimaryButton'
 import { SketchCanvas, SketchCanvasRef } from '@/Components/SketchCanvas'
 
 const CANVAS_PADDING = 10
@@ -24,6 +23,7 @@ const DoodlesCreatePage = () => {
 
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const canvas = useRef<SketchCanvasRef>(null)
+  const [isErasing, setIsErasing] = useState(false)
   const [canvasSize, setCanvasSize] = useState({ height: 0, width: 0 })
   const [strokeColor, setStrokeColor] = useState<string>(colors.gray[900])
   const [strokeWidth, setStrokeWidth] = useState<StrokeWidth>(
@@ -67,7 +67,7 @@ const DoodlesCreatePage = () => {
 
       setCanvasSize({
         height: Math.min(height, maxHeight) - CANVAS_PADDING,
-        width: Math.min(width, maxWidth) - CANVAS_PADDING,
+        width: Math.min(width, maxWidth),
       })
     }
 
@@ -80,7 +80,7 @@ const DoodlesCreatePage = () => {
 
   const onChangeStrokeColor = useCallback((color: string) => {
     setStrokeColor(color)
-    canvas.current?.eraseMode(false)
+    setIsErasing(false)
   }, [])
 
   const onPickColor = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
@@ -94,184 +94,198 @@ const DoodlesCreatePage = () => {
     <AuthenticatedLayout
       backRoute="doodles.index"
       renderNav={() => (
-        <PrimaryButton type="submit" form="doodle-form">
+        <button type="submit" form="doodle-form">
           Submit
-        </PrimaryButton>
+        </button>
       )}
     >
       <Head title="New Doodle" />
-      <form
-        onSubmit={onSubmitDoodle}
-        className="flex h-full flex-col"
-        id="doodle-form"
-      >
-        <div className="flex h-full w-full justify-center">
-          <div className="grid w-24 grid-cols-2 content-start justify-around gap-2 p-2">
+      <form onSubmit={onSubmitDoodle} className="flex h-full" id="doodle-form">
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="grid w-24 grid-cols-2 content-start gap-2 p-2">
             <button
-              className="grid aspect-square w-full place-items-center rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => setStrokeWidth(StrokeWidth.Pixel)}
             >
-              <span className="inline-block h-1 w-1 rounded-full bg-gray-900">
+              <span
+                className="inline-block h-[3px] w-[3px] border border-gray-900 border-opacity-80"
+                style={{ backgroundColor: strokeColor }}
+              >
                 <span className="sr-only">Pixel</span>
               </span>
             </button>
             <button
-              className="grid aspect-square w-full place-items-center rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => setStrokeWidth(StrokeWidth.Small)}
             >
-              <span className="inline-block h-2 w-2 rounded-full bg-gray-900">
+              <span
+                className="inline-block h-[7px] w-[7px]  border border-gray-900 border-opacity-80"
+                style={{ backgroundColor: strokeColor }}
+              >
                 <span className="sr-only">Small</span>
               </span>
             </button>
             <button
-              className="grid aspect-square w-full place-items-center rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => setStrokeWidth(StrokeWidth.Medium)}
             >
-              <span className="inline-block h-3 w-3 rounded-full bg-gray-900">
+              <span
+                className="inline-block h-[9px] w-[9px] border border-gray-900 border-opacity-80"
+                style={{ backgroundColor: strokeColor }}
+              >
                 <span className="sr-only">Medium</span>
               </span>
             </button>
             <button
-              className="grid aspect-square w-full place-items-center rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => setStrokeWidth(StrokeWidth.Large)}
             >
-              <span className="inline-block h-4 w-4 rounded-full bg-gray-900">
+              <span
+                className="inline-block h-[13px] w-[13px] border border-gray-900 border-opacity-80"
+                style={{ backgroundColor: strokeColor }}
+              >
                 <span className="sr-only">Large</span>
               </span>
             </button>
             <button
-              className="aspect-square w-full rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => canvas.current?.undo()}
             >
-              &lt;
+              <img src="/sprites/undo.png" alt="Undo" />
             </button>
             <button
-              className="aspect-square w-full rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => canvas.current?.redo()}
             >
-              &gt;
+              <img src="/sprites/redo.png" alt="Redo" />
             </button>
             <button
-              className="aspect-square w-full rounded-full border border-gray-500 bg-white"
+              className={classNames(
+                'rounded-2px grid aspect-square w-full place-items-center',
+                {
+                  'bg-white': !isErasing,
+                  'bg-gray-400': isErasing,
+                },
+              )}
               type="button"
-              onClick={() => canvas.current?.eraseMode(true)}
+              onClick={() => setIsErasing(true)}
             >
-              E
+              <img src="/sprites/eraser.png" alt="Eraser" />
             </button>
             <button
-              className="aspect-square w-full rounded-full border border-gray-500 bg-white"
+              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
               onClick={() => canvas.current?.clearCanvas()}
             >
-              C
+              <img src="/sprites/x.png" alt="Clear" />
             </button>
           </div>
           <div className="relative h-full w-full" ref={canvasContainerRef}>
-            <div className="absolute inset-0 text-center">
-              <div className="inline-block border border-gray-900">
-                <SketchCanvas
-                  ref={canvas}
-                  width={canvasSize.width}
-                  height={canvasSize.height}
-                  strokeWidth={strokeWidth}
-                  strokeColor={strokeColor}
-                />
-              </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <SketchCanvas
+                className="rounded-4px"
+                ref={canvas}
+                width={canvasSize.width}
+                height={canvasSize.height}
+                strokeWidth={strokeWidth}
+                strokeColor={strokeColor}
+                isErasing={isErasing}
+              />
             </div>
           </div>
           <div className="grid w-24 grid-cols-2 content-start justify-around gap-2 p-2">
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-gray-500 bg-gray-900"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-900"
               onClick={() => onChangeStrokeColor(colors.gray[900])}
             >
               <span className="sr-only">Black</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-gray-500 bg-white"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-white"
               onClick={() => onChangeStrokeColor(colors.white)}
             >
               <span className="sr-only">White</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-red-700 bg-red-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-red-500"
               onClick={() => onChangeStrokeColor(colors.red[500])}
             >
               <span className="sr-only">Red</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-pink-700 bg-pink-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-pink-500"
               onClick={() => onChangeStrokeColor(colors.pink[500])}
             >
               <span className="sr-only">Pink</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-orange-700 bg-orange-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-orange-500"
               onClick={() => onChangeStrokeColor(colors.orange[500])}
             >
               <span className="sr-only">Orange</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-yellow-700 bg-yellow-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-yellow-500"
               onClick={() => onChangeStrokeColor(colors.yellow[500])}
             >
               <span className="sr-only">Yellow</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-green-700 bg-green-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-green-500"
               onClick={() => onChangeStrokeColor(colors.green[500])}
             >
               <span className="sr-only">Green</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-blue-700 bg-blue-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-blue-500"
               onClick={() => onChangeStrokeColor(colors.blue[500])}
             >
               <span className="sr-only">Blue</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-indigo-700 bg-indigo-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-indigo-500"
               onClick={() => onChangeStrokeColor(colors.indigo[500])}
             >
               <span className="sr-only">Indigo</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-violet-700 bg-violet-500"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-violet-500"
               onClick={() => onChangeStrokeColor(colors.violet[500])}
             >
               <span className="sr-only">Violet</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-yellow-700 bg-yellow-800"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-yellow-800"
               onClick={() => onChangeStrokeColor(colors.yellow[800])}
             >
               <span className="sr-only">Brown</span>
             </button>
             <button
               type="button"
-              className="aspect-square w-full rounded-full border border-gray-700 bg-gray-400"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-400"
               onClick={() => onChangeStrokeColor(colors.gray[400])}
             >
               <span className="sr-only">Gray</span>
             </button>
             <label
-              className="col-span-2 h-6 w-full rounded-full "
+              className="rounded-2px col-span-2 h-6 w-full border border-gray-900 border-opacity-50"
               style={{ backgroundColor: strokeColor }}
             >
               <input className=" hidden " type="color" onChange={onPickColor} />

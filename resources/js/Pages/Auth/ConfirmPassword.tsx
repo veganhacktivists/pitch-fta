@@ -2,9 +2,9 @@ import React, { useCallback, useEffect } from 'react'
 import { Head, useForm } from '@inertiajs/inertia-react'
 import { GuestLayout } from '@/Layouts/GuestLayout'
 import { InputError } from '@/Components/InputError'
-import { InputLabel } from '@/Components/InputLabel'
-import { PrimaryButton } from '@/Components/PrimaryButton'
-import { TextInput } from '@/Components/TextInput'
+import { InputLabel } from '@/Components/Forms/InputLabel'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { TextInput } from '@/Components/Forms/TextInput'
 import useRoute from '@/Hooks/useRoute'
 
 const ConfirmPasswordPage = () => {
@@ -50,10 +50,10 @@ const ConfirmPasswordPage = () => {
             setData={setData}
           />
 
-          <InputError message={errors.password} className="mt-2" />
+          <InputError message={errors.password} />
         </div>
 
-        <div className="flex items-center justify-end mt-4">
+        <div className="mt-4 flex items-center justify-end">
           <PrimaryButton className="ml-4" disabled={processing}>
             Confirm
           </PrimaryButton>

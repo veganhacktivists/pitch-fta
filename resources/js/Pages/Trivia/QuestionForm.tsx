@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react'
 import { useForm } from '@inertiajs/inertia-react'
-import { RadioGroup } from '@headlessui/react'
-import classNames from 'classnames'
 import useRoute from '@/Hooks/useRoute'
 import { TriviaQuestion } from '@/Types'
 import { InputError } from '@/Components/InputError'
-import { PrimaryButton } from '@/Components/PrimaryButton'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 
 interface QuestionFormProps {
   question: TriviaQuestion
@@ -19,9 +17,11 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
     answer_id: 0,
   })
 
-  const setSelectedAnswer = useCallback(
-    (answerId: number) => {
-      setData({ answer_id: answerId })
+  const onSelectAnswer = useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >(
+    (event) => {
+      setData('answer_id', parseInt(event.target.value, 10))
     },
     [setData],
   )
@@ -31,62 +31,41 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
       e.preventDefault()
 
       post(route('trivia.answer'))
+      setData({ answer_id: 0 })
     },
-    [post, route],
+    [post, route, setData],
   )
   return (
-    <>
-      <p className="text-center">{question.text}</p>
-
-      <form className="mx-4" onSubmit={onSubmit}>
-        <RadioGroup value={data.answer_id} onChange={setSelectedAnswer}>
-          <RadioGroup.Label className="sr-only">Answer</RadioGroup.Label>
-          <div className="space-y-4">
-            {question.answers.map((answer) => (
-              <RadioGroup.Option
-                key={answer.text}
-                value={answer.id}
-                className={({ checked, active }) =>
-                  classNames(
-                    checked ? 'border-transparent' : 'border-gray-300',
-                    active ? 'border-indigo-500 ring-2 ring-indigo-500' : '',
-                    'relative block cursor-pointer rounded-lg border bg-white px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between',
-                  )
-                }
-              >
-                {({ active, checked }) => (
-                  <>
-                    <span className="flex items-center">
-                      <span className="flex flex-col text-sm">
-                        <RadioGroup.Label
-                          as="span"
-                          className="font-medium text-gray-900"
-                        >
-                          {answer.text}
-                        </RadioGroup.Label>
-                      </span>
-                    </span>
-                    <span
-                      className={classNames(
-                        active ? 'border' : 'border-2',
-                        checked ? 'border-indigo-500' : 'border-transparent',
-                        'pointer-events-none absolute -inset-px rounded-lg',
-                      )}
-                      aria-hidden="true"
-                    />
-                  </>
-                )}
-              </RadioGroup.Option>
-            ))}
-          </div>
-        </RadioGroup>
+    <form
+      className="flex h-full flex-col gap-4 overflow-auto"
+      onSubmit={onSubmit}
+    >
+      <div className="nes-container is-dark is-rounded with-title">
+        <h2 className="title">Question</h2>
+        <p className="text-sm">{question.text}</p>
+      </div>
+      {question.answers.map((answer) => (
+        <label className="px-4 leading-6" key={answer.id}>
+          <input
+            type="radio"
+            className="nes-radio is-dark h-0 w-0"
+            name="answer-dark"
+            value={answer.id}
+            onChange={onSelectAnswer}
+            checked={data.answer_id === answer.id}
+            required
+          />
+          <span>{answer.text}</span>
+        </label>
+      ))}
+      <div className="flex h-20 flex-1 items-end pt-20">
         {errors.answer_id && <InputError message={errors.answer_id} />}
-        <div className="text-right">
+        <div className="w-full p-3">
           <PrimaryButton disabled={processing || data.answer_id === 0}>
             Submit
           </PrimaryButton>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   )
 }

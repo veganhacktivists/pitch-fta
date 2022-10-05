@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -12,14 +14,14 @@ class IdeaController extends Controller
     public function index()
     {
         return Inertia::render('Ideas/Index', [
-            'ideas' => Idea::orderByVotes()->get(),
+            'ideas' => $this->getIdeas(),
         ]);
     }
 
     public function create()
     {
         return Inertia::render('Ideas/Index', [
-            'ideas' => Idea::orderByVotes()->get(),
+            'ideas' => $this->getIdeas(),
             'isCreateModalOpen' => true,
         ]);
     }
@@ -30,11 +32,19 @@ class IdeaController extends Controller
             'text' => ['required', 'min:1', 'max:256'],
         ]);
 
-        Auth::user()
-            ->ideas()
-            ->create([
-                'text' => $request->input('text'),
-            ]);
+        $user = Auth::user();
+
+        if ($user->num_votes <= 0) {
+            return redirect()
+                ->route('ideas.index')
+                ->with('message', 'You need more votes to submit an idea!');
+        }
+
+        $idea = $user->ideas()->create([
+            'text' => $request->input('text'),
+        ]);
+
+        $user->castVote($idea);
 
         return redirect()
             ->route('ideas.index')
@@ -46,5 +56,16 @@ class IdeaController extends Controller
         Auth::user()->castVote($idea);
 
         return redirect()->back();
+    }
+
+    private function getIdeas(): Collection
+    {
+        return Idea::orderByVotes()
+            ->withCount([
+                'votes' => function (Builder $query) {
+                    return $query->where('votes.user_id', Auth::id());
+                },
+            ])
+            ->get();
     }
 }

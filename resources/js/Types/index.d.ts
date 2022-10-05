@@ -18,7 +18,7 @@ export interface User {
 export interface Idea {
   id: number
   text: string
-  num_votes: number
+  votes_count: number
   user_id: number
   created_at: DateTime
   updated_at: DateTime

@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -18,7 +19,6 @@ interface CanvasPath {
 }
 
 export interface SketchCanvasRef {
-  eraseMode: (erase: boolean) => void
   clearCanvas: () => void
   undo: () => void
   redo: () => void
@@ -29,6 +29,7 @@ interface SketchCanvasProps {
   className?: string
   strokeColor: string
   strokeWidth: number
+  isErasing: boolean
   height: number
   width: number
 }
@@ -36,7 +37,7 @@ interface SketchCanvasProps {
 export const SketchCanvas = React.forwardRef<
   SketchCanvasRef,
   SketchCanvasProps
->(({ className, strokeColor, strokeWidth, height, width }, ref) => {
+>(({ className, strokeColor, strokeWidth, height, width, isErasing }, ref) => {
   const [tool, setTool] = useState<Tool>('pen')
   const [currentPaths, setCurrentPaths] = useState<CanvasPath[]>([])
   const [resetStack, setResetStack] = useState<CanvasPath[]>([])
@@ -45,6 +46,10 @@ export const SketchCanvas = React.forwardRef<
 
   // const isDrawing = useRef(false)
   const stageRef = useRef<Konva.Stage>(null)
+
+  useEffect(() => {
+    setTool(isErasing ? 'eraser' : 'pen')
+  }, [isErasing])
 
   const onMouseDown = useCallback(
     (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
@@ -91,7 +96,6 @@ export const SketchCanvas = React.forwardRef<
   }, [])
 
   useImperativeHandle(ref, () => ({
-    eraseMode: (isErasing: boolean) => setTool(isErasing ? 'eraser' : 'pen'),
     clearCanvas: () => {
       setResetStack([...currentPaths])
       setUndoStack([])

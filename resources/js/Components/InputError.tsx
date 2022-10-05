@@ -8,6 +8,6 @@ export const InputError = ({
   className?: string
 }) => {
   return message ? (
-    <p className={`text-sm text-red-600 ${className}`}>{message}</p>
+    <p className={`nes-text is-error mt-2 ${className}`}>{message}</p>
   ) : null
 }

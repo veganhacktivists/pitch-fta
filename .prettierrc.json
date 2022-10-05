@@ -36,14 +36,6 @@
         "parser": "php",
         "singleQuote": true
       }
-    },
-    {
-      "files": "*.blade.php",
-      "options": {
-        "parser": "blade",
-        "sortTailwindcssClasses": true,
-        "tabWidth": 2
-      }
     }
   ]
 }

@@ -2,13 +2,19 @@ import React, { useCallback, useEffect } from 'react'
 import { Head, Link, useForm } from '@inertiajs/inertia-react'
 import { GuestLayout } from '@/Layouts/GuestLayout'
 import { InputError } from '@/Components/InputError'
-import { InputLabel } from '@/Components/InputLabel'
-import { PrimaryButton } from '@/Components/PrimaryButton'
-import { TextInput } from '@/Components/TextInput'
+import { InputLabel } from '@/Components/Forms/InputLabel'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { TextInput } from '@/Components/Forms/TextInput'
 import useRoute from '@/Hooks/useRoute'
 import { useSearchParams } from '@/Hooks/useSearchParams'
+import { FormField } from '@/Components/Forms/FormField'
+import { PasswordInput } from '@/Components/PasswordInput'
 
-const LoginPage = () => {
+interface LoginPageProps {
+  status?: string
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
   const route = useRoute()
   const searchParams = useSearchParams()
   const { data, setData, post, errors, reset } = useForm({
@@ -37,54 +43,54 @@ const LoginPage = () => {
     <GuestLayout>
       <Head title="Log in" />
 
-      <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="email">Email</InputLabel>
+      <div className="nes-container is-dark with-title">
+        <h2 className="title">Log in</h2>
+        <form
+          onSubmit={onSubmit}
+          className="mx-auto flex h-full flex-col gap-6"
+        >
+          {status && <div className="nes-text is-success">{status}</div>}
+          <FormField>
+            <InputLabel htmlFor="email">Email</InputLabel>
 
-          <TextInput
-            type="text"
-            name="email"
-            value={data.email}
-            className="mt-1 block w-full"
-            autoComplete="username"
-            setData={setData}
-          />
+            <TextInput
+              type="text"
+              name="email"
+              value={data.email}
+              className="w-full"
+              autoComplete="username"
+              setData={setData}
+            />
 
-          <InputError message={errors.email} className="mt-2" />
-        </div>
+            <InputError message={errors.email} />
+          </FormField>
 
-        <div className="mt-4">
-          <InputLabel htmlFor="password">Pin</InputLabel>
+          <FormField>
+            <InputLabel htmlFor="password">Pin</InputLabel>
 
-          <TextInput
-            type="password"
-            name="password"
-            value={data.password}
-            className="mt-1 block w-full"
-            autoComplete="current-password"
-            inputMode="numeric"
-            required
-            minLength={4}
-            maxLength={4}
-            pattern="[0-9]{4}"
-            title="Please enter your four-digit pin"
-            setData={setData}
-          />
+            <PasswordInput
+              name="password"
+              value={data.password}
+              autoComplete="current-password"
+              title="Please enter your four-digit pin"
+              className="w-full"
+              setData={setData}
+            />
 
-          <InputError message={errors.password} className="mt-2" />
-        </div>
+            <InputError message={errors.password} />
+          </FormField>
 
-        <div className="mt-4 flex items-center justify-end">
-          <Link
-            href={route('password.request')}
-            className="text-sm text-gray-600 underline hover:text-gray-900"
-          >
-            Forgot your password?
-          </Link>
-
-          <PrimaryButton className="ml-4">Log in</PrimaryButton>
-        </div>
-      </form>
+          <PrimaryButton>Log in</PrimaryButton>
+        </form>
+      </div>
+      <div className="mt-4 text-center">
+        <Link
+          className="mx-auto border-b border-gray-100 pb-1 text-gray-100"
+          href={route('password.request')}
+        >
+          Forgot your password?
+        </Link>
+      </div>
     </GuestLayout>
   )
 }

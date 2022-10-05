@@ -2,10 +2,12 @@ import React, { useCallback, useEffect } from 'react'
 import { Head, useForm } from '@inertiajs/inertia-react'
 import { GuestLayout } from '@/Layouts/GuestLayout'
 import { InputError } from '@/Components/InputError'
-import { InputLabel } from '@/Components/InputLabel'
-import { PrimaryButton } from '@/Components/PrimaryButton'
-import { TextInput } from '@/Components/TextInput'
+import { InputLabel } from '@/Components/Forms/InputLabel'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { TextInput } from '@/Components/Forms/TextInput'
 import useRoute from '@/Hooks/useRoute'
+import { FormField } from '@/Components/Forms/FormField'
+import { PasswordInput } from '@/Components/PasswordInput'
 
 const ResetPasswordPage = ({
   token,
@@ -41,43 +43,44 @@ const ResetPasswordPage = ({
     <GuestLayout>
       <Head title="Reset Password" />
 
-      <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="email">Email</InputLabel>
+      <div className="nes-container is-dark with-title">
+        <h2 className="title">Password reset</h2>
+        <form
+          onSubmit={onSubmit}
+          className="mx-auto flex h-full flex-col gap-6"
+        >
+          <FormField>
+            <InputLabel htmlFor="email">Email</InputLabel>
 
-          <TextInput
-            type="email"
-            name="email"
-            value={data.email}
-            className="mt-1 block w-full"
-            autoComplete="username"
-            setData={setData}
-          />
+            <TextInput
+              type="email"
+              name="email"
+              value={data.email}
+              className="w-full"
+              autoComplete="username"
+              setData={setData}
+            />
 
-          <InputError message={errors.email} className="mt-2" />
-        </div>
+            <InputError message={errors.email} />
+          </FormField>
 
-        <div className="mt-4">
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <FormField>
+            <InputLabel htmlFor="password">Password</InputLabel>
 
-          <TextInput
-            type="password"
-            name="password"
-            value={data.password}
-            className="mt-1 block w-full"
-            autoComplete="new-password"
-            setData={setData}
-          />
+            <PasswordInput
+              name="password"
+              className="w-full"
+              value={data.password}
+              autoComplete="new-password"
+              setData={setData}
+            />
 
-          <InputError message={errors.password} className="mt-2" />
-        </div>
+            <InputError message={errors.password} />
+          </FormField>
 
-        <div className="flex items-center justify-end mt-4">
-          <PrimaryButton className="ml-4" disabled={processing}>
-            Reset Password
-          </PrimaryButton>
-        </div>
-      </form>
+          <PrimaryButton disabled={processing}>Reset Password</PrimaryButton>
+        </form>
+      </div>
     </GuestLayout>
   )
 }

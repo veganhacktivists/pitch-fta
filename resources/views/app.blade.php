@@ -6,16 +6,17 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+        <script>
+            WebFont.load({ google: { families: ['Press Start 2P'] } });
+        </script>
 
-        <!-- Scripts -->
         @routes
         @viteReactRefresh
         @vite('resources/js/app.tsx')
         @inertiaHead
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans text-xs h-screen street">
         @inertia
     </body>
 </html>

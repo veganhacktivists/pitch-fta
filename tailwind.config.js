@@ -11,8 +11,14 @@ module.exports = {
 
   theme: {
     extend: {
+      colors: {
+        'nes-dark': '#212529',
+      },
       fontFamily: {
-        sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+        sans: ['"Press Start 2P"', ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        xxs: '0.5rem',
       },
     },
   },

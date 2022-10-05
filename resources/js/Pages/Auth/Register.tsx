@@ -2,11 +2,13 @@ import React, { useCallback, useEffect } from 'react'
 import { Head, Link, useForm } from '@inertiajs/inertia-react'
 import { GuestLayout } from '@/Layouts/GuestLayout'
 import { InputError } from '@/Components/InputError'
-import { InputLabel } from '@/Components/InputLabel'
-import { PrimaryButton } from '@/Components/PrimaryButton'
-import { TextInput } from '@/Components/TextInput'
+import { InputLabel } from '@/Components/Forms/InputLabel'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { TextInput } from '@/Components/Forms/TextInput'
 import useRoute from '@/Hooks/useRoute'
 import { useSearchParams } from '@/Hooks/useSearchParams'
+import { FormField } from '@/Components/Forms/FormField'
+import { PasswordInput } from '@/Components/PasswordInput'
 
 const RegisterPage = () => {
   const route = useRoute()
@@ -38,66 +40,65 @@ const RegisterPage = () => {
     <GuestLayout>
       <Head title="Register" />
 
-      <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <TextInput
-            type="email"
-            name="email"
-            value={data.email}
-            className="mt-1 block w-full"
-            autoComplete="username"
-            setData={setData}
-            required
-          />
-          <InputError message={errors.email} className="mt-2" />
-        </div>
-        <div className="mt-4">
-          <InputLabel htmlFor="name">Name (optional)</InputLabel>
+      <div className="nes-container is-dark with-title">
+        <h2 className="title">Sign up</h2>
+        <form
+          onSubmit={onSubmit}
+          className="mx-auto flex h-full flex-col gap-6"
+        >
+          <FormField>
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <TextInput
+              type="email"
+              name="email"
+              value={data.email}
+              className="mt-1 block w-full"
+              autoComplete="username"
+              setData={setData}
+              required
+            />
+            <InputError message={errors.email} />
+          </FormField>
+          <FormField>
+            <InputLabel htmlFor="name">Name (optional)</InputLabel>
 
-          <TextInput
-            name="name"
-            value={data.name}
-            className="mt-1 block w-full"
-            autoComplete="name"
-            setData={setData}
-          />
+            <TextInput
+              name="name"
+              value={data.name}
+              className="mt-1 block w-full"
+              autoComplete="name"
+              setData={setData}
+            />
 
-          <InputError message={errors.name} className="mt-2" />
-        </div>
+            <InputError message={errors.name} />
+          </FormField>
 
-        <div className="mt-4">
-          <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
+          <FormField>
+            <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
 
-          <TextInput
-            type="password"
-            name="password"
-            value={data.password}
-            className="mt-1 block w-full"
-            autoComplete="new-password"
-            setData={setData}
-            inputMode="numeric"
-            required
-            minLength={4}
-            maxLength={4}
-            pattern="[0-9]{4}"
-            title="Please enter a four-digit pin"
-          />
+            <PasswordInput
+              name="password"
+              value={data.password}
+              autoComplete="new-password"
+              title="Please enter a four-digit pin"
+              className="w-full"
+              setData={setData}
+            />
 
-          <InputError message={errors.password} className="mt-2" />
-        </div>
-
-        <div className="mt-4 flex items-center justify-end">
-          <Link
-            href={route('login')}
-            className="text-sm text-gray-600 underline hover:text-gray-900"
-          >
-            Already registered?
-          </Link>
+            <InputError message={errors.password} />
+          </FormField>
 
           <PrimaryButton className="ml-4">Register</PrimaryButton>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div className="mt-4 text-center">
+        <Link
+          className="mx-auto border-b border-gray-100 pb-1 text-gray-100"
+          href={route('login')}
+        >
+          Already registered?
+        </Link>
+      </div>
     </GuestLayout>
   )
 }
