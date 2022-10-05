@@ -12,11 +12,11 @@ import { PasswordInput } from '@/Components/PasswordInput'
 
 const RegisterPage = () => {
   const route = useRoute()
-  const params = useSearchParams()
+  const searchParams = useSearchParams()
 
   const { data, setData, post, errors, reset } = useForm({
     name: '',
-    email: params.email,
+    email: searchParams.email,
     password: '',
   })
 
@@ -59,6 +59,23 @@ const RegisterPage = () => {
             />
             <InputError message={errors.email} />
           </FormField>
+
+          <FormField>
+            <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
+
+            <PasswordInput
+              name="password"
+              value={data.password}
+              autoComplete="new-password"
+              title="Please enter a four-digit pin"
+              className="w-full"
+              setData={setData}
+              autoFocus={searchParams.email.length > 0}
+            />
+
+            <InputError message={errors.password} />
+          </FormField>
+
           <FormField>
             <InputLabel htmlFor="name">Name (optional)</InputLabel>
 
@@ -71,21 +88,6 @@ const RegisterPage = () => {
             />
 
             <InputError message={errors.name} />
-          </FormField>
-
-          <FormField>
-            <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
-
-            <PasswordInput
-              name="password"
-              value={data.password}
-              autoComplete="new-password"
-              title="Please enter a four-digit pin"
-              className="w-full"
-              setData={setData}
-            />
-
-            <InputError message={errors.password} />
           </FormField>
 
           <PrimaryButton className="ml-4">Register</PrimaryButton>

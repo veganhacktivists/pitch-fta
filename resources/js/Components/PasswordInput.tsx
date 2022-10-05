@@ -10,6 +10,7 @@ interface PasswordInputProps
 
 export const PasswordInput: React.FC<PasswordInputProps> = ({
   setData,
+  autoFocus,
   ...props
 }) => {
   const { isToggled: isText, toggle: toggleIsText } = useToggleState(false)
@@ -17,8 +18,10 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    inputRef.current?.focus()
-  }, [isText])
+    if (autoFocus) {
+      inputRef.current?.focus()
+    }
+  }, [autoFocus, isText])
 
   return (
     <div className="relative flex items-center">

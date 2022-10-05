@@ -75,6 +75,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
               title="Please enter your four-digit pin"
               className="w-full"
               setData={setData}
+              autoFocus={searchParams.email.length > 0}
             />
 
             <InputError message={errors.password} />
