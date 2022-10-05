@@ -14,7 +14,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
   const { data, setData, post, errors, processing } = useForm<{
     answer_id: number
   }>({
-    answer_id: 0,
+    answer_id: question.answers[0].id,
   })
 
   const onSelectAnswer = useCallback<
