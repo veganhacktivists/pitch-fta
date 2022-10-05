@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react'
 import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
-import useTypedPage from '@/Hooks/useTypedPage'
 import useRoute from '@/Hooks/useRoute'
 
 interface AuthenticatedLayoutProps {
@@ -16,9 +15,6 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
   renderNav,
 }) => {
   const route = useRoute()
-  const {
-    props: { auth },
-  } = useTypedPage()
 
   return (
     <div className="street flex h-screen flex-col overflow-hidden">
@@ -33,13 +29,7 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
             </Link>
           </div>
 
-          <div className="flex-1 text-right">
-            {renderNav?.() || (
-              <div>
-                {auth.user.num_votes} vote{auth.user.num_votes === 1 ? '' : 's'}
-              </div>
-            )}
-          </div>
+          <div className="flex-1 text-right">{renderNav?.()}</div>
         </div>
       </nav>
       <main className="flex h-full flex-col overflow-hidden">{children}</main>

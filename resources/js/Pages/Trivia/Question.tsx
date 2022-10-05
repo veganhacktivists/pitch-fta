@@ -4,6 +4,7 @@ import { TriviaQuestion } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { QuestionForm } from './QuestionForm'
 import useTypedPage from '@/Hooks/useTypedPage'
+import { VoteCount } from '@/Components/VoteCount'
 
 interface TriviaQuestionPageProps {
   question: TriviaQuestion
@@ -27,7 +28,7 @@ const TriviaQuestionPage: React.FC<TriviaQuestionPageProps> = ({
   }, [question, message])
 
   return (
-    <AuthenticatedLayout backRoute="home">
+    <AuthenticatedLayout backRoute="home" renderNav={() => <VoteCount />}>
       <Head title={question ? question.text : 'Trivia'} />
       {alert && (
         <div className="nes-container is-rounded is-dark relative flex items-center text-center">
