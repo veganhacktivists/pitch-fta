@@ -23,6 +23,9 @@ const DoodlesCreatePage = () => {
 
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const canvas = useRef<SketchCanvasRef>(null)
+  const [isLandscape, setIsLandscape] = useState(
+    window.outerWidth > window.outerHeight,
+  )
   const [isErasing, setIsErasing] = useState(false)
   const [canvasSize, setCanvasSize] = useState({ height: 0, width: 0 })
   const [strokeColor, setStrokeColor] = useState<string>(colors.gray[900])
@@ -71,11 +74,20 @@ const DoodlesCreatePage = () => {
       })
     }
 
-    onResize()
+    const onOrientationChange = () => {
+      setIsLandscape(window.outerWidth > window.outerHeight)
+    }
 
+    onResize()
+    onOrientationChange()
+
+    window.addEventListener('resize', onOrientationChange)
     window.addEventListener('resize', onResize)
 
-    return () => window.removeEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onOrientationChange)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
   const onChangeStrokeColor = useCallback((color: string) => {
@@ -105,7 +117,19 @@ const DoodlesCreatePage = () => {
       )}
     >
       <Head title="New Doodle" />
-      <form onSubmit={onSubmitDoodle} className="flex h-full" id="doodle-form">
+      {!isLandscape && (
+        <div className="flex h-full items-center">
+          <div className="nes-container is-rounded is-dark with-title">
+            <h2 className="title">Hey!</h2>
+            <p>To doodle, you should definitely rotate your phone!</p>
+          </div>
+        </div>
+      )}
+      <form
+        onSubmit={onSubmitDoodle}
+        className={classNames('h-full', isLandscape ? 'flex' : 'hidden')}
+        id="doodle-form"
+      >
         <div className="flex h-full w-full items-center justify-center">
           <div className="grid w-24 grid-cols-2 content-start gap-2 p-2">
             <button

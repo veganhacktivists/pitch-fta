@@ -10,7 +10,7 @@ interface DoodlesShowPageProps {
 
 const DoodlesShowPage: React.FC<DoodlesShowPageProps> = ({ doodle }) => {
   return (
-    <AuthenticatedLayout backRoute="doodles.index">
+    <AuthenticatedLayout backRoute="doodles.index" orientation="landscape">
       <Head title="Doodle" />
       <Alert observable={doodle} />
 
