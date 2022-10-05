@@ -14,6 +14,6 @@ class TriviaAnswer extends Model
 
     public function question(): BelongsTo
     {
-        return $this->belongsTo(TriviaQuestion::class);
+        return $this->belongsTo(TriviaQuestion::class, 'trivia_question_id');
     }
 }
