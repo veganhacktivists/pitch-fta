@@ -83,6 +83,11 @@ const DoodlesCreatePage = () => {
     setIsErasing(false)
   }, [])
 
+  const onChangeStrokeWidth = useCallback((width: number) => {
+    setStrokeWidth(width)
+    setIsErasing(false)
+  }, [])
+
   const onPickColor = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     (e) => {
       setStrokeColor(e.target.value)
@@ -106,7 +111,7 @@ const DoodlesCreatePage = () => {
             <button
               className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
-              onClick={() => setStrokeWidth(StrokeWidth.Pixel)}
+              onClick={() => onChangeStrokeWidth(StrokeWidth.Pixel)}
             >
               <span
                 className="inline-block h-[3px] w-[3px] border border-gray-900 border-opacity-80"
@@ -118,7 +123,7 @@ const DoodlesCreatePage = () => {
             <button
               className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
-              onClick={() => setStrokeWidth(StrokeWidth.Small)}
+              onClick={() => onChangeStrokeWidth(StrokeWidth.Small)}
             >
               <span
                 className="inline-block h-[7px] w-[7px]  border border-gray-900 border-opacity-80"
@@ -130,7 +135,7 @@ const DoodlesCreatePage = () => {
             <button
               className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
-              onClick={() => setStrokeWidth(StrokeWidth.Medium)}
+              onClick={() => onChangeStrokeWidth(StrokeWidth.Medium)}
             >
               <span
                 className="inline-block h-[9px] w-[9px] border border-gray-900 border-opacity-80"
@@ -142,7 +147,7 @@ const DoodlesCreatePage = () => {
             <button
               className="rounded-2px grid aspect-square w-full place-items-center bg-white"
               type="button"
-              onClick={() => setStrokeWidth(StrokeWidth.Large)}
+              onClick={() => onChangeStrokeWidth(StrokeWidth.Large)}
             >
               <span
                 className="inline-block h-[13px] w-[13px] border border-gray-900 border-opacity-80"
