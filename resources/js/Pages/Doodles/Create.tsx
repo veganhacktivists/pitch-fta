@@ -103,6 +103,7 @@ const DoodlesCreatePage = () => {
           Submit
         </button>
       )}
+      orientation="landscape"
     >
       <Head title="New Doodle" />
       <form onSubmit={onSubmitDoodle} className="flex h-full" id="doodle-form">
