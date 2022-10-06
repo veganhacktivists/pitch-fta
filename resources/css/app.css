@@ -8,6 +8,10 @@
   @apply !outline-none !ring-0;
 }
 
+*:active {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   image-rendering: pixelated;
 }
