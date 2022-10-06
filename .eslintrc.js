@@ -52,6 +52,7 @@ module.exports = {
         controlComponents: ['JetCheckbox'],
       },
     ],
+    'react/no-unescaped-entities': ['off'],
   },
   ignorePatterns: ['*.js'],
 }

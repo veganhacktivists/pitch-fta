@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useForm } from '@inertiajs/inertia-react'
 import useRoute from '@/Hooks/useRoute'
 import { TriviaQuestion } from '@/Types'
@@ -16,6 +16,13 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
   }>({
     answer_id: question.answers[0].id,
   })
+
+  useEffect(() => {
+    setData({
+      answer_id: question.answers[0].id,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question.answers])
 
   const onSelectAnswer = useCallback<
     React.ChangeEventHandler<HTMLInputElement>

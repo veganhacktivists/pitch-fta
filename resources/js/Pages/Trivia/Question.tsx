@@ -17,7 +17,14 @@ const TriviaQuestionPage: React.FC<TriviaQuestionPageProps> = ({
       <Head title={question ? question.text : 'Trivia'} />
       <Alert observable={question} />
       {question && <QuestionForm question={question} />}
-      {!question && <p>No questions left</p>}
+      {!question && (
+        <div className="flex h-full items-center">
+          <div className="nes-container is-dark is-rounded with-title">
+            <h2 className="title">Whoa!</h2>
+            <p>You've gone through all the trivia questions.</p>
+          </div>
+        </div>
+      )}
     </AuthenticatedLayout>
   )
 }
