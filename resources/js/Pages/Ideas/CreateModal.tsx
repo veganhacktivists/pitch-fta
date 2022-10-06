@@ -80,6 +80,9 @@ export const CreateModal: React.FC<CreateModalProps> = ({
             </FormField>
             <InputError message={errors.text} />
             <PrimaryButton type="submit">Submit</PrimaryButton>
+            <p className="text-white">
+              Note: Submitting a new idea will use one of your votes!
+            </p>
           </>
         ) : (
           <>

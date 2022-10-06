@@ -8,6 +8,7 @@ import { useToggleState } from '@/Hooks/useToggleState'
 import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { CreateModal } from './CreateModal'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 
 interface IdeasIndexPageProps {
   ideas: Idea[]
@@ -91,38 +92,55 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
         </div>
       )}
 
-      <div className="message-list h-full overflow-auto px-3">
-        {ideas.map((idea, i) => {
-          const alignment = i % 2 === 0 ? 'left' : 'right'
+      {ideas.length <= 0 && (
+        <div className="flex h-full items-center">
+          <div className="nes-container is-rounded is-dark with-title">
+            <h2 className="title">Hey!</h2>
+            <p>
+              It looks like nobody has submitted an idea yet. Want to be the
+              first?
+            </p>
+            <PrimaryButton className="mt-4" onClick={toggleCreateModal}>
+              New idea
+            </PrimaryButton>
+          </div>
+        </div>
+      )}
 
-          return (
-            <button
-              key={idea.id}
-              className={classNames(
-                `message block text-left -${alignment}`,
-                alignment === 'right' && 'ml-auto',
-              )}
-              {...onVote(idea.id)}
-            >
-              <div className={`nes-balloon from-${alignment}`}>
-                <p>{idea.text}</p>
+      {ideas.length > 0 && (
+        <div className="message-list h-full overflow-auto px-3">
+          {ideas.map((idea, i) => {
+            const alignment = i % 2 === 0 ? 'left' : 'right'
 
-                {idea.votes_count > 0 && (
-                  <p
-                    className={classNames(
-                      `mt-2 flex items-center gap-1`,
-                      alignment === 'right' && 'justify-end',
-                    )}
-                  >
-                    <i className="nes-icon is-small like" />
-                    {idea.votes_count}
-                  </p>
+            return (
+              <button
+                key={idea.id}
+                className={classNames(
+                  `message block text-left -${alignment}`,
+                  alignment === 'right' && 'ml-auto',
                 )}
-              </div>
-            </button>
-          )
-        })}
-      </div>
+                {...onVote(idea.id)}
+              >
+                <div className={`nes-balloon from-${alignment}`}>
+                  <p className="[word-break:break-word]">{idea.text}</p>
+
+                  {idea.votes_count > 0 && (
+                    <p
+                      className={classNames(
+                        `mt-2 flex items-center gap-1`,
+                        alignment === 'right' && 'justify-end',
+                      )}
+                    >
+                      <i className="nes-icon is-small like" />
+                      {idea.votes_count}
+                    </p>
+                  )}
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      )}
       <CreateModal
         isOpen={isCreateModalOpen}
         setIsOpen={setIsCreateModalOpen}

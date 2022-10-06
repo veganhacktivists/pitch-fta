@@ -16,7 +16,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       className={classNames(
         'nes-btn ml-1 mr-0 w-[calc(100%-8px)]',
         {
-          'is-primary': !disabled,
+          'is-success': !disabled,
           'is-disabled': disabled,
         },
         className,
