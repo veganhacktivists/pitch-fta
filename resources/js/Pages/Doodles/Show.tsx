@@ -12,7 +12,9 @@ const DoodlesShowPage: React.FC<DoodlesShowPageProps> = ({ doodle }) => {
   return (
     <AuthenticatedLayout backRoute="doodles.index">
       <Head title="Doodle" />
-      <Alert observable={doodle} />
+      <div className="absolute">
+        <Alert observable={doodle} />
+      </div>
 
       <div className="flex h-full w-full py-4">
         <img

@@ -110,11 +110,13 @@ const DoodlesCreatePage = () => {
   return (
     <AuthenticatedLayout
       backRoute="doodles.index"
-      renderNav={() => (
-        <button type="submit" form="doodle-form">
-          Submit
-        </button>
-      )}
+      renderNav={() =>
+        isLandscape && (
+          <button type="submit" form="doodle-form">
+            Submit
+          </button>
+        )
+      }
     >
       <Head title="New Doodle" />
       {!isLandscape && (

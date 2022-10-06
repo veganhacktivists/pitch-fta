@@ -8,7 +8,7 @@ export const VoteCount = () => {
 
   return (
     <>
-      {auth.user.num_votes} vote{auth.user.num_votes === 1 ? '' : 's'}
+      {auth.user.num_votes} {auth.user.num_votes === 1 ? 'vote' : 'votes'}
     </>
   )
 }

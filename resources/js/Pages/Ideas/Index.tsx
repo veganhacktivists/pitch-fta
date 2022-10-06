@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { useLongPress } from 'use-long-press'
-import { Head, useForm } from '@inertiajs/inertia-react'
+import { Head } from '@inertiajs/inertia-react'
 import { Idea } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { useToggleState } from '@/Hooks/useToggleState'
-import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { CreateModal } from './CreateModal'
-import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { VoteModal } from './VoteModal'
+import { useDismissable } from '@/Hooks/useDismissable'
+import { IdeaSection } from './IdeaSection'
+import { Button } from '@/Components/Forms/Button'
+
+const DISMISSABLE_KEY_INSTRUCTIONS = 'ideas.instructions.dismissed'
 
 interface IdeasIndexPageProps {
   ideas: Idea[]
@@ -33,10 +36,15 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     toggle: toggleCreateModal,
   } = useToggleState(isModalOpen)
 
-  const route = useRoute()
-  const { post, data, setData } = useForm({
-    ideaId: 0,
-  })
+  const [ideaIdToVoteOn, setIdeaIdToVoteOn] = useState<number | null>(null)
+  const {
+    isToggled: shouldShowInstructions,
+    toggle: toggleInstructions,
+    setIsToggled: setShouldShowInstructions,
+  } = useToggleState(false)
+  const [areInstructionsDismissed, dismissInstructions] = useDismissable(
+    DISMISSABLE_KEY_INSTRUCTIONS,
+  )
 
   useEffect(() => {
     setAlert(message)
@@ -46,105 +54,78 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     setAlert('')
   }, [])
 
-  const onVote = useLongPress(
-    () => {
-      if (data.ideaId !== 0) {
-        post(route('ideas.vote', data.ideaId))
-      }
-    },
-    {
-      cancelOnMovement: true,
-      onStart(e, { context }) {
-        if (!(e.target instanceof HTMLElement)) return
-        if (!(typeof context === 'number')) return
+  const onCloseVoteModal = useCallback(() => {
+    setIdeaIdToVoteOn(null)
+  }, [])
 
-        setData({
-          ideaId: context,
-        })
-      },
-      onFinish() {
-        setData({
-          ideaId: 0,
-        })
-      },
-    },
-  )
+  const onDismissInstructions = useCallback(() => {
+    setShouldShowInstructions(false)
+    dismissInstructions()
+  }, [dismissInstructions, setShouldShowInstructions])
 
   return (
     <AuthenticatedLayout
       backRoute="home"
-      renderNav={() => <button onClick={toggleCreateModal}>New</button>}
+      renderNav={() =>
+        areInstructionsDismissed &&
+        !shouldShowInstructions && (
+          <button onClick={toggleCreateModal}>New</button>
+        )
+      }
     >
       <Head title="Ideas" />
-      {alert ? (
-        <div className="nes-container is-rounded is-dark relative flex items-center text-center">
-          <p className="px-4">{alert}</p>
-          <button className="absolute right-4" onClick={onDismissAlert}>
-            <i className="nes-icon close is-small before:!text-white" />
-          </button>
-        </div>
-      ) : (
-        <div className="nes-container is-rounded is-dark text-center">
-          <p>
-            You have {user.num_votes} vote{user.num_votes === 1 ? '' : 's'}{' '}
-            left.
+      <div
+        className={classNames('h-full items-center', {
+          flex: !areInstructionsDismissed || shouldShowInstructions,
+          hidden: areInstructionsDismissed && !shouldShowInstructions,
+        })}
+      >
+        <div className="nes-container is-rounded is-dark with-title">
+          <h2 className="title">
+            {areInstructionsDismissed ? 'Help' : 'Hey there!'}
+          </h2>
+          <p className="text-sm">
+            {!areInstructionsDismissed && 'You look new here around here. '}
+            This is where you get to submit your awesome idea(s) for the next
+            project that the Vegan Hacktivists team will work on. In order to
+            submit an idea, click "New" in the top-right corner. If you'd like
+            to vote on an idea, simply click on the idea. Choose wisely,
+            however; your votes are limited!
           </p>
+
+          <Button onClick={onDismissInstructions} className="mt-4">
+            Continue
+          </Button>
         </div>
-      )}
-
-      {ideas.length <= 0 && (
-        <div className="flex h-full items-center">
-          <div className="nes-container is-rounded is-dark with-title">
-            <h2 className="title">Hey!</h2>
-            <p>
-              It looks like nobody has submitted an idea yet. Want to be the
-              first?
-            </p>
-            <PrimaryButton className="mt-4" onClick={toggleCreateModal}>
-              New idea
-            </PrimaryButton>
-          </div>
+      </div>
+      <div
+        className={
+          !areInstructionsDismissed || shouldShowInstructions
+            ? 'hidden'
+            : 'flex h-full flex-col'
+        }
+      >
+        <IdeaSection
+          alert={alert}
+          ideas={ideas}
+          onClickIdea={setIdeaIdToVoteOn}
+          onDismissAlert={onDismissAlert}
+          toggleCreateModal={toggleCreateModal}
+          user={user}
+        />
+        <div className="fixed bottom-2 left-2 w-12">
+          <Button onClick={toggleInstructions}>?</Button>
         </div>
-      )}
-
-      {ideas.length > 0 && (
-        <div className="message-list h-full overflow-auto px-3">
-          {ideas.map((idea, i) => {
-            const alignment = i % 2 === 0 ? 'left' : 'right'
-
-            return (
-              <button
-                key={idea.id}
-                className={classNames(
-                  `message block text-left -${alignment}`,
-                  alignment === 'right' && 'ml-auto',
-                )}
-                {...onVote(idea.id)}
-              >
-                <div className={`nes-balloon from-${alignment}`}>
-                  <p className="[word-break:break-word]">{idea.text}</p>
-
-                  {idea.votes_count > 0 && (
-                    <p
-                      className={classNames(
-                        `mt-2 flex items-center gap-1`,
-                        alignment === 'right' && 'justify-end',
-                      )}
-                    >
-                      <i className="nes-icon is-small like" />
-                      {idea.votes_count}
-                    </p>
-                  )}
-                </div>
-              </button>
-            )
-          })}
-        </div>
-      )}
+      </div>
+      {/* {areInstructionsDismissed && !shouldShowInstructions && (
+      )} */}
       <CreateModal
         isOpen={isCreateModalOpen}
         setIsOpen={setIsCreateModalOpen}
       />
+      {ideaIdToVoteOn && (
+        <VoteModal ideaId={ideaIdToVoteOn} onClose={onCloseVoteModal} />
+      )}
     </AuthenticatedLayout>
   )
 }

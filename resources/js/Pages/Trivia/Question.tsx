@@ -5,6 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { QuestionForm } from './QuestionForm'
 import { VoteCount } from '@/Components/VoteCount'
 import { Alert } from '@/Components/Alert'
+import { PrimaryButtonLink } from '@/Components/Forms/PrimaryButton'
 
 interface TriviaQuestionPageProps {
   question: TriviaQuestion
@@ -22,6 +23,9 @@ const TriviaQuestionPage: React.FC<TriviaQuestionPageProps> = ({
           <div className="nes-container is-dark is-rounded with-title">
             <h2 className="title">Whoa!</h2>
             <p>You've gone through all the trivia questions.</p>
+            <PrimaryButtonLink className="mt-4 w-full" href={route('home')}>
+              Return
+            </PrimaryButtonLink>
           </div>
         </div>
       )}

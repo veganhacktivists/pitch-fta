@@ -53,7 +53,18 @@ class IdeaController extends Controller
 
     public function vote(Request $request, Idea $idea)
     {
-        Auth::user()->castVote($idea);
+        $user = Auth::user();
+
+        $request->validate([
+            'num_votes' => [
+                'required',
+                'integer',
+                'min:1',
+                "max:{$user->num_votes}",
+            ],
+        ]);
+
+        Auth::user()->castVote($idea, $request->input('num_votes'));
 
         return redirect()->back();
     }

@@ -53,16 +53,25 @@ class User extends Authenticatable
         return $this->increment('num_votes', $numVotes);
     }
 
-    public function castVote(Idea $idea)
+    public function castVote(Idea $idea, int $numVotes = 1)
     {
+        $numVotes = min($this->num_votes, $numVotes);
+
         if ($this->num_votes <= 0) {
             return;
         }
 
-        $this->votes()->create([
-            'idea_id' => $idea->id,
-        ]);
+        $this->votes()->createMany(
+            array_map(function ($ideaId) {
+                return [
+                    'idea_id' => $ideaId,
+                ];
+            }, array_fill(0, $numVotes, $idea->id))
+        );
 
-        self::where('id', $this->id)->decrement('num_votes');
+        self::where('id', $this->id)->decrement(
+            'num_votes',
+            min($this->num_votes, $numVotes)
+        );
     }
 }
