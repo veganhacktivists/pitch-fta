@@ -26,6 +26,7 @@ const DoodlesCreatePage = () => {
   const [isLandscape, setIsLandscape] = useState(
     window.outerWidth > window.outerHeight,
   )
+  const [isEmpty, setIsEmpty] = useState(false)
   const [isErasing, setIsErasing] = useState(false)
   const [canvasSize, setCanvasSize] = useState({ height: 0, width: 0 })
   const [strokeColor, setStrokeColor] = useState<string>(colors.gray[900])
@@ -107,11 +108,16 @@ const DoodlesCreatePage = () => {
     [],
   )
 
+  const onChangeCanvas = useCallback(() => {
+    setIsEmpty(!!canvas.current?.isEmpty())
+  }, [])
+
   return (
     <AuthenticatedLayout
       backRoute="doodles.index"
       renderNav={() =>
-        isLandscape && (
+        isLandscape &&
+        !isEmpty && (
           <button type="submit" form="doodle-form">
             Submit
           </button>
@@ -227,6 +233,7 @@ const DoodlesCreatePage = () => {
                 strokeWidth={strokeWidth}
                 strokeColor={strokeColor}
                 isErasing={isErasing}
+                onChange={onChangeCanvas}
               />
             </div>
           </div>
