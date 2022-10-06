@@ -85,7 +85,7 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
             {areInstructionsDismissed ? 'Help' : 'Hey there!'}
           </h2>
           <p className="text-sm">
-            {!areInstructionsDismissed && 'You look new here around here. '}
+            {!areInstructionsDismissed && 'You look new around here. '}
             This is where you get to submit your awesome idea(s) for the next
             project that the Vegan Hacktivists team will work on. In order to
             submit an idea, click "New" in the top-right corner. If you'd like
