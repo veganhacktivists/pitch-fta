@@ -34,6 +34,6 @@ export const PrimaryButtonLink: React.FC<InertiaLinkProps> = ({
   ...props
 }) => {
   return (
-    <Link className={classNames('nes-btn is-primary', className)} {...props} />
+    <Link className={classNames('nes-btn is-success', className)} {...props} />
   )
 }

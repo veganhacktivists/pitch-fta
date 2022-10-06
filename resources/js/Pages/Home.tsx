@@ -1,5 +1,5 @@
 import React from 'react'
-import { Head, Link } from '@inertiajs/inertia-react'
+import { Head } from '@inertiajs/inertia-react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
 import { PrimaryButtonLink } from '@/Components/Forms/PrimaryButton'
