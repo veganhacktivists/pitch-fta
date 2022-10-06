@@ -18,14 +18,19 @@ const RegisterPage = () => {
     name: '',
     email: searchParams.email,
     password: '',
+    referrer: searchParams.referrer || localStorage.getItem('referrer'),
   })
 
   useEffect(() => {
+    if (searchParams.referrer) {
+      localStorage.setItem('referrer', searchParams.referrer)
+    }
+
     return () => {
       reset('password')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [searchParams.referrer])
 
   const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
     (e) => {

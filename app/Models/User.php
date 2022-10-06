@@ -74,4 +74,21 @@ class User extends Authenticatable
             min($this->num_votes, $numVotes)
         );
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (User $user) {
+            if ($user->referral_code) {
+                return;
+            }
+
+            do {
+                $code = bin2hex(random_bytes(2));
+            } while (self::where('referral_code', $code)->exists());
+
+            $user->referral_code = $code;
+        });
+    }
 }

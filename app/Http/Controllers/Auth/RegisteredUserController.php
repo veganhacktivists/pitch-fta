@@ -14,6 +14,8 @@ use Inertia\Inertia;
 
 class RegisteredUserController extends Controller
 {
+    const NUM_VOTES_FOR_REFERRAL = 10;
+
     public function create()
     {
         return Inertia::render('Auth/Register');
@@ -32,6 +34,17 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($referralCode = $request->input('referrer')) {
+            $referrer = User::where('referral_code', $referralCode)->first();
+
+            if ($referrer) {
+                $referrer->awardvotes(self::NUM_VOTES_FOR_REFERRAL);
+
+                $user->referrer_id = $referrer->id;
+                $user->save();
+            }
+        }
 
         event(new Registered($user));
 

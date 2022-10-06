@@ -7,6 +7,7 @@ export interface User {
   name: string
   email: string
   num_votes: number
+  referral_code: string
   profile_photo_path: Nullable<string>
   profile_photo_url: string
   two_factor_enabled: boolean
