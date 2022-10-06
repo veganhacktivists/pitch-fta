@@ -21,7 +21,7 @@ return new class extends Migration {
         });
 
         DB::table('users')->update([
-            'referral_code' => DB::raw('(LEFT(UUID(), 4))'),
+            'referral_code' => DB::raw('(SUBSTR(MD5(RAND()), 1, 4))'),
         ]);
 
         Schema::table('users', function (Blueprint $table) {
