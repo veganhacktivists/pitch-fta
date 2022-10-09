@@ -12,6 +12,30 @@ export interface User {
   profile_photo_url: string
   two_factor_enabled: boolean
   email_verified_at: Nullable<DateTime>
+  badges: Badge[]
+  badge_tasks: BadgeTask[]
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+export interface Badge {
+  id: number
+  title: string
+  description: string
+  icon_path: string
+  completion_message?: string
+  tasks: BadgeTask[]
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+export interface BadgeTask {
+  id: number
+  title: string
+  description: string
+  icon_path: string
+  completion_message?: string
+  badge: Badge
   created_at: DateTime
   updated_at: DateTime
 }
@@ -54,6 +78,9 @@ export type InertiaSharedProps<T = Record<string, unknown>> = T & {
   }
   flash: {
     message?: string
+    badge?: Badge
+    badgeTask?: BadgeTask
+    progress: number
   }
   user: User
   errorBags: any

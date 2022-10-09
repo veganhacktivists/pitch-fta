@@ -23,6 +23,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'flash' => [
                 'message' => fn() => $request->session()->get('message'),
+                'progress' => fn() => $request->session()->get('progress'),
+                'badge' => fn() => $request->session()->get('badge'),
+                'badgeTask' => fn() => $request->session()->get('badge_task'),
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

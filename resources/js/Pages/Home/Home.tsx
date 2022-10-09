@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { Head } from '@inertiajs/inertia-react'
+import classNames from 'classnames'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
 import { PrimaryButtonLink } from '@/Components/Forms/PrimaryButton'
@@ -7,8 +8,15 @@ import { Button, ButtonLink } from '@/Components/Forms/Button'
 import { VoteCount } from '@/Components/VoteCount'
 import { ShareModal } from './ShareModal'
 import useTypedPage from '@/Hooks/useTypedPage'
+import { Badge } from '@/Types'
+import { BadgeModal } from './BadgeModal'
+import { hasBadge } from '@/Util/badges'
 
-const HomePage = () => {
+interface HomePageProps {
+  badges: Badge[]
+}
+
+const HomePage: React.FC<HomePageProps> = ({ badges }) => {
   const {
     props: {
       auth: { user },
@@ -16,7 +24,9 @@ const HomePage = () => {
   } = useTypedPage()
   const route = useRoute()
 
+  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
 
   const onClickShare = useCallback(() => {
     const url = route('register', {
@@ -32,6 +42,11 @@ const HomePage = () => {
     }
   }, [route, setIsShareModalOpen, user.referral_code])
 
+  const onClickBadge = useCallback((badge: Badge) => {
+    setSelectedBadge(badge)
+    setIsBadgeModalOpen(true)
+  }, [])
+
   return (
     <AuthenticatedLayout renderNav={() => <VoteCount />}>
       <Head title="Welcome" />
@@ -42,16 +57,45 @@ const HomePage = () => {
           </PrimaryButtonLink>
           <ButtonLink href={route('doodles.index')}>Doodles</ButtonLink>
           <ButtonLink href={route('trivia.question')}>Trivia</ButtonLink>
-          <ButtonLink href="/">Scan QR</ButtonLink>
+          <ButtonLink href={route('scan')}>Scan QR</ButtonLink>
           <Button onClick={onClickShare}>Share</Button>
         </div>
         <div className="nes-container is-rounded is-dark with-title">
           <h2 className="title">Badges</h2>
+          <div className="grid grid-cols-2 place-items-center gap-4 sm:grid-cols-4">
+            {badges.map((badge) => (
+              <button
+                className={classNames(
+                  'flex flex-col items-center gap-4 sm:w-1/4',
+                  !hasBadge(user, badge) && 'opacity-50',
+                )}
+                key={badge.id}
+                onClick={() => onClickBadge(badge)}
+              >
+                <img
+                  src={badge.icon_path}
+                  alt={badge.title}
+                  className="max-w-[64px]"
+                />
+                <h3>
+                  {badge.title.split(' ').map((word, j) => (
+                    <>
+                      {word}
+                      {j === 0 && <br />}
+                    </>
+                  ))}
+                </h3>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-      {isShareModalOpen && (
-        <ShareModal isOpen={isShareModalOpen} setIsOpen={setIsShareModalOpen} />
-      )}
+      <ShareModal isOpen={isShareModalOpen} setIsOpen={setIsShareModalOpen} />
+      <BadgeModal
+        isOpen={isBadgeModalOpen}
+        badge={selectedBadge}
+        setIsOpen={setIsBadgeModalOpen}
+      />
     </AuthenticatedLayout>
   )
 }

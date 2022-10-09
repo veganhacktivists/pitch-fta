@@ -53,6 +53,7 @@ module.exports = {
       },
     ],
     'react/no-unescaped-entities': ['off'],
+    'no-plusplus': ['off'],
   },
   ignorePatterns: ['*.js'],
 }

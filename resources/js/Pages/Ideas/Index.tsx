@@ -117,8 +117,6 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
           <Button onClick={toggleInstructions}>?</Button>
         </div>
       </div>
-      {/* {areInstructionsDismissed && !shouldShowInstructions && (
-      )} */}
       <CreateModal
         isOpen={isCreateModalOpen}
         setIsOpen={setIsCreateModalOpen}

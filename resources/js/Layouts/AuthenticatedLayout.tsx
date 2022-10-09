@@ -19,7 +19,7 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
   return (
     <div className="street flex h-screen flex-col overflow-hidden">
       <nav>
-        <div className="flex h-16 items-center justify-evenly px-4 text-white">
+        <div className="flex h-20 items-center justify-evenly px-4 text-white">
           <div className="flex-1">
             {backRoute && <Link href={route(backRoute)}>Back</Link>}
           </div>
