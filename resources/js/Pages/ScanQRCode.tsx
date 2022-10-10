@@ -27,6 +27,7 @@ const ScanQRCodePage = () => {
     setIsToggled: setIsConfirmationModalOpen,
     toggle: toggleConfirmationModal,
   } = useToggleState(false)
+
   const [qrData, setQrData] = useState('')
   const scanner = useRef<QRCodeScannerRef>(null)
 
