@@ -20,7 +20,7 @@ const ScanQRCodePage = () => {
     },
   } = useTypedPage()
   const route = useRoute()
-  const { post, processing, error } = useForm()
+  const { post, processing } = useForm()
 
   const {
     isToggled: isConfirmationModalOpen,
@@ -28,6 +28,7 @@ const ScanQRCodePage = () => {
     toggle: toggleConfirmationModal,
   } = useToggleState(false)
 
+  const [isInvalidQRCode, setIsInvalidQRCode] = useState(false)
   const [qrData, setQrData] = useState('')
   const scanner = useRef<QRCodeScannerRef>(null)
 
@@ -47,7 +48,12 @@ const ScanQRCodePage = () => {
   }, [message, qrData])
 
   useEffect(() => {
+    setIsConfirmationModalOpen(isInvalidQRCode)
+  }, [isInvalidQRCode, setIsConfirmationModalOpen])
+
+  useEffect(() => {
     if (!isConfirmationModalOpen) {
+      setIsInvalidQRCode(false)
       scanner.current?.resume()
     }
   }, [isConfirmationModalOpen])
@@ -61,7 +67,7 @@ const ScanQRCodePage = () => {
       if (path === 'scan' && scanId.match(/^[\d\w]{4}$/i)) {
         setQrData(scanId)
       } else {
-        // invalid QR code
+        setIsInvalidQRCode(true)
       }
     } catch (e) {
       // swallow
@@ -81,10 +87,16 @@ const ScanQRCodePage = () => {
         )}
       </SizeWatcher>
       <Modal
-        isOpen={isConfirmationModalOpen}
+        isOpen={processing || isConfirmationModalOpen}
         setIsOpen={setIsConfirmationModalOpen}
       >
         <div className="flex flex-col gap-4 text-white">
+          {processing && <p className="text-white">Scanning...</p>}
+          {isInvalidQRCode && (
+            <p className="text-white">
+              It looks like you've scanned an invalid QR Code. Try again!
+            </p>
+          )}
           {message && <p>{message}</p>}
           {badgeTask?.completion_message && (
             <div className="flex items-center gap-3">
