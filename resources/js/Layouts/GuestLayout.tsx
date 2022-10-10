@@ -3,16 +3,28 @@ import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
 
+import { SizeWatcher } from '@/Components/SizeWatcher'
+
 export const GuestLayout: ParentComponent = ({ children }) => {
   return (
-    <div className="street flex h-screen flex-col overflow-hidden">
-      <div className="mx-auto flex items-center p-4 align-middle">
-        <Link href="/" className="hover:no-underline">
-          <ApplicationLogo className="m-0 pt-2 text-xl" />
-        </Link>
-      </div>
-
-      <div className="h-full">{children}</div>
-    </div>
+    <SizeWatcher isFullScreen>
+      {({ width, height }) => (
+        <div
+          className="street flex flex-col overflow-hidden"
+          style={{ width, height }}
+        >
+          <main className="flex h-full flex-col overflow-auto pb-4">
+            <nav>
+              <div className="grid h-20 place-items-center px-4 text-white">
+                <Link href="/">
+                  <ApplicationLogo className="text-xl" />
+                </Link>
+              </div>
+            </nav>
+            {children}
+          </main>
+        </div>
+      )}
+    </SizeWatcher>
   )
 }

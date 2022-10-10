@@ -79,10 +79,10 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
                 />
                 <h3>
                   {badge.title.split(' ').map((word, j) => (
-                    <>
+                    <React.Fragment key={j}>
                       {word}
                       {j === 0 && <br />}
-                    </>
+                    </React.Fragment>
                   ))}
                 </h3>
               </button>

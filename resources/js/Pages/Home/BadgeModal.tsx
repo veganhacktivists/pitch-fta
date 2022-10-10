@@ -46,6 +46,7 @@ export const BadgeModal: React.FC<BadgeModalProps> = ({
                   'flex items-center gap-4',
                   !didBadgeTask(user, badgeTask) && 'opacity-50',
                 )}
+                key={badgeTask.id}
               >
                 <img
                   src={badgeTask.icon_path}

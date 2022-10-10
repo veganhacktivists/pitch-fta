@@ -166,7 +166,6 @@ export const SketchCanvas = React.forwardRef<
         <Layer>
           {currentPaths.map((line, i) => (
             <Line
-              // eslint-disable-next-line react/no-array-index-key
               key={i}
               points={line.points}
               stroke={line.strokeColor}
