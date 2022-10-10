@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Modal } from '@/Components/Modal'
 import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
@@ -20,12 +20,20 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   } = useTypedPage()
   const route = useRoute()
 
+  const [isCopied, setIsCopied] = useState(false)
+
   const copyLink = useCallback(() => {
+    setIsCopied(true)
+
     navigator.clipboard.writeText(
       route('register', {
         referrer: user.referral_code,
       }),
     )
+
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 750)
   }, [route, user.referral_code])
 
   return (
@@ -35,7 +43,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         up using your referral link, you will receive 10 votes!
       </p>
       <PrimaryButton className="mt-4" onClick={copyLink}>
-        Copy referral link
+        {isCopied ? 'Copied!' : 'Copy referral link'}
       </PrimaryButton>
     </Modal>
   )
