@@ -25,8 +25,12 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
 
       onResize()
       window.addEventListener('resize', onResize)
+      window.addEventListener('orientationchange', onResize)
 
-      return () => window.removeEventListener('resize', onResize)
+      return () => {
+        window.removeEventListener('resize', onResize)
+        window.removeEventListener('orientationchange', onResize)
+      }
     }
 
     if (ref.current) {
