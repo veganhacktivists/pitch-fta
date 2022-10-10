@@ -50,6 +50,13 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     setAlert(message)
   }, [ideas.length, message])
 
+  useEffect(() => {
+    if (isCreateModalOpen) {
+      setShouldShowInstructions(false)
+      dismissInstructions()
+    }
+  }, [dismissInstructions, isCreateModalOpen, setShouldShowInstructions])
+
   const onDismissAlert = useCallback(() => {
     setAlert('')
   }, [])
@@ -66,12 +73,7 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
   return (
     <AuthenticatedLayout
       backRoute="home"
-      renderNav={() =>
-        areInstructionsDismissed &&
-        !shouldShowInstructions && (
-          <button onClick={toggleCreateModal}>New</button>
-        )
-      }
+      renderNav={() => <button onClick={toggleCreateModal}>New</button>}
     >
       <Head title="Ideas" />
       <div
