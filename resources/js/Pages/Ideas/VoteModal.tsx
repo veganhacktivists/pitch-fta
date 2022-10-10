@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/inertia-react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { InputError } from '@/Components/InputError'
 import { Modal } from '@/Components/Modal'
 import {
@@ -9,13 +9,19 @@ import {
 import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { Button } from '@/Components/Forms/Button'
+import { Idea } from '@/Types'
 
 interface VoteModalProps {
-  ideaId: number
-  onClose: () => void
+  isOpen: boolean
+  idea: Idea | null
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export const VoteModal: React.FC<VoteModalProps> = ({ ideaId, onClose }) => {
+export const VoteModal: React.FC<VoteModalProps> = ({
+  idea,
+  isOpen,
+  setIsOpen,
+}) => {
   const {
     props: {
       auth: { user },
@@ -26,24 +32,19 @@ export const VoteModal: React.FC<VoteModalProps> = ({ ideaId, onClose }) => {
     num_votes: 1,
   })
 
-  // This is silly, but it's to ensure that the fade-in animation occurs
-  const [isOpen, setIsOpen] = useState(false)
-  useEffect(() => {
-    setIsOpen(true)
-  }, [])
-
   const submitForm = useCallback<React.FormEventHandler<HTMLFormElement>>(
     (e) => {
       e.preventDefault()
+      if (idea === null) return
 
-      post(route('ideas.vote', ideaId), {
+      post(route('ideas.vote', idea.id), {
         onSuccess() {
-          onClose()
+          setIsOpen(false)
           reset()
         },
       })
     },
-    [ideaId, onClose, post, reset, route],
+    [idea, post, reset, route, setIsOpen],
   )
 
   const decrementNumVotes = useCallback(() => {
@@ -59,7 +60,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ ideaId, onClose }) => {
   }, [data.num_votes, setData, user.num_votes])
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={(open) => !open && onClose()}>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       {user.num_votes <= 0 && (
         <>
           <p className="text-white">
@@ -74,6 +75,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({ ideaId, onClose }) => {
       <form onSubmit={submitForm} className="flex flex-col gap-4">
         {user.num_votes > 1 && (
           <>
+            <p className="text-white">{idea?.text}</p>
             <p className="text-white">
               How many votes would you like to cast for this idea?
             </p>

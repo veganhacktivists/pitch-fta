@@ -6,7 +6,7 @@ import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 interface IdeaSectionProps {
   alert?: string
   ideas: Idea[]
-  onClickIdea: (ideaId: number) => void
+  onClickIdea: (idea: Idea) => void
   onDismissAlert: () => void
   toggleCreateModal: () => void
   user: User
@@ -64,7 +64,7 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
                 `message block text-left -${alignment}`,
                 alignment === 'right' && 'ml-auto',
               )}
-              onClick={() => onClickIdea(idea.id)}
+              onClick={() => onClickIdea(idea)}
             >
               <div className={`nes-balloon from-${alignment}`}>
                 <p className="[word-break:break-word]">{idea.text}</p>

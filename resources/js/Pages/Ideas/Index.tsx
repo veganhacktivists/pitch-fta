@@ -36,7 +36,8 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     toggle: toggleCreateModal,
   } = useToggleState(isModalOpen)
 
-  const [ideaIdToVoteOn, setIdeaIdToVoteOn] = useState<number | null>(null)
+  const [isVoteModalOpen, setIsVoteModalOpen] = useState(false)
+  const [ideaToVoteOn, setIdeaToVoteOn] = useState<Idea | null>(null)
   const {
     isToggled: shouldShowInstructions,
     toggle: toggleInstructions,
@@ -57,12 +58,13 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
     }
   }, [dismissInstructions, isCreateModalOpen, setShouldShowInstructions])
 
-  const onDismissAlert = useCallback(() => {
-    setAlert('')
+  const onClickIdea = useCallback((idea: Idea) => {
+    setIdeaToVoteOn(idea)
+    setIsVoteModalOpen(true)
   }, [])
 
-  const onCloseVoteModal = useCallback(() => {
-    setIdeaIdToVoteOn(null)
+  const onDismissAlert = useCallback(() => {
+    setAlert('')
   }, [])
 
   const onDismissInstructions = useCallback(() => {
@@ -110,7 +112,7 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
         <IdeaSection
           alert={alert}
           ideas={ideas}
-          onClickIdea={setIdeaIdToVoteOn}
+          onClickIdea={onClickIdea}
           onDismissAlert={onDismissAlert}
           toggleCreateModal={toggleCreateModal}
           user={user}
@@ -123,9 +125,11 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
         isOpen={isCreateModalOpen}
         setIsOpen={setIsCreateModalOpen}
       />
-      {ideaIdToVoteOn && (
-        <VoteModal ideaId={ideaIdToVoteOn} onClose={onCloseVoteModal} />
-      )}
+      <VoteModal
+        isOpen={isVoteModalOpen}
+        idea={ideaToVoteOn}
+        setIsOpen={setIsVoteModalOpen}
+      />
     </AuthenticatedLayout>
   )
 }
