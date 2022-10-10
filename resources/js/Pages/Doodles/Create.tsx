@@ -6,6 +6,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
 import { SketchCanvas, SketchCanvasRef } from '@/Components/SketchCanvas'
 import { useToggleState } from '@/Hooks/useToggleState'
+import { SizeWatcher } from '@/Components/SizeWatcher'
 
 const CANVAS_PADDING = 10
 
@@ -22,7 +23,6 @@ const DoodlesCreatePage = () => {
     doodle: null,
   })
 
-  const canvasContainerRef = useRef<HTMLDivElement>(null)
   const canvas = useRef<SketchCanvasRef>(null)
   const {
     isToggled: isLandscapeAlertDismissed,
@@ -33,7 +33,6 @@ const DoodlesCreatePage = () => {
   )
   const [isEmpty, setIsEmpty] = useState(false)
   const [isErasing, setIsErasing] = useState(false)
-  const [canvasSize, setCanvasSize] = useState({ height: 0, width: 0 })
   const [strokeColor, setStrokeColor] = useState<string>(colors.gray[900])
   const [strokeWidth, setStrokeWidth] = useState<StrokeWidth>(
     StrokeWidth.Medium,
@@ -65,34 +64,16 @@ const DoodlesCreatePage = () => {
   }, [data])
 
   useEffect(() => {
-    const onResize = () => {
-      if (!canvasContainerRef.current) return
-
-      const { width, height } =
-        canvasContainerRef.current.getBoundingClientRect()
-
-      const maxWidth = height * 2
-      const maxHeight = width / 2
-
-      setCanvasSize({
-        height: Math.min(height, maxHeight) - CANVAS_PADDING,
-        width: Math.min(width, maxWidth),
-      })
-    }
-
     const onOrientationChange = () => {
       setIsLandscape(window.outerWidth > window.outerHeight)
     }
 
-    onResize()
     onOrientationChange()
 
     window.addEventListener('resize', onOrientationChange)
-    window.addEventListener('resize', onResize)
 
     return () => {
       window.removeEventListener('resize', onOrientationChange)
-      window.removeEventListener('resize', onResize)
     }
   }, [])
 
@@ -230,20 +211,22 @@ const DoodlesCreatePage = () => {
               <img src="/sprites/x.png" alt="Clear" />
             </button>
           </div>
-          <div className="relative h-full w-full" ref={canvasContainerRef}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <SketchCanvas
-                className="rounded-4px"
-                ref={canvas}
-                width={canvasSize.width}
-                height={canvasSize.height}
-                strokeWidth={strokeWidth}
-                strokeColor={strokeColor}
-                isErasing={isErasing}
-                onChange={onChangeCanvas}
-              />
-            </div>
-          </div>
+          <SizeWatcher className="relative h-full w-full">
+            {({ height, width }) => (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <SketchCanvas
+                  className="rounded-4px"
+                  ref={canvas}
+                  width={Math.min(width, height * 2)}
+                  height={Math.min(height, width / 2) - CANVAS_PADDING}
+                  strokeWidth={strokeWidth}
+                  strokeColor={strokeColor}
+                  isErasing={isErasing}
+                  onChange={onChangeCanvas}
+                />
+              </div>
+            )}
+          </SizeWatcher>
           <div className="grid w-24 grid-cols-2 content-start justify-around gap-2 p-2">
             <button
               type="button"
