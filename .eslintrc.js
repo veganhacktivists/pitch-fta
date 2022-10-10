@@ -54,6 +54,7 @@ module.exports = {
     ],
     'react/no-unescaped-entities': ['off'],
     'no-plusplus': ['off'],
+    'prettier/prettier': ['off'],
   },
   ignorePatterns: ['*.js'],
 }

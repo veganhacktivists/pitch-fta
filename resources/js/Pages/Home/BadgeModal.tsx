@@ -1,10 +1,10 @@
 import React from 'react'
+import classNames from 'classnames'
 import { Modal } from '@/Components/Modal'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 import { Badge } from '@/Types'
 import { didBadgeTask, getBadgeProgress } from '@/Util/badges'
-import classNames from 'classnames'
 
 interface BadgeModalProps {
   badge: Badge | null

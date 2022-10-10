@@ -5,6 +5,7 @@ import colors from 'tailwindcss/colors'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
 import { SketchCanvas, SketchCanvasRef } from '@/Components/SketchCanvas'
+import { useToggleState } from '@/Hooks/useToggleState'
 
 const CANVAS_PADDING = 10
 
@@ -23,6 +24,10 @@ const DoodlesCreatePage = () => {
 
   const canvasContainerRef = useRef<HTMLDivElement>(null)
   const canvas = useRef<SketchCanvasRef>(null)
+  const {
+    isToggled: isLandscapeAlertDismissed,
+    toggle: toggleIsLandscapeAlertDismissed,
+  } = useToggleState(false)
   const [isLandscape, setIsLandscape] = useState(
     window.outerWidth > window.outerHeight,
   )
@@ -116,7 +121,6 @@ const DoodlesCreatePage = () => {
     <AuthenticatedLayout
       backRoute="doodles.index"
       renderNav={() =>
-        isLandscape &&
         !isEmpty && (
           <button type="submit" form="doodle-form">
             Submit
@@ -125,19 +129,22 @@ const DoodlesCreatePage = () => {
       }
     >
       <Head title="New Doodle" />
-      {!isLandscape && (
-        <div className="flex h-full items-center">
-          <div className="nes-container is-rounded is-dark with-title">
-            <h2 className="title">Hey!</h2>
-            <p>To doodle, you should definitely rotate your phone!</p>
-          </div>
-        </div>
-      )}
       <form
         onSubmit={onSubmitDoodle}
-        className={classNames('h-full', isLandscape ? 'flex' : 'hidden')}
+        className={classNames('h-full')}
         id="doodle-form"
       >
+        {!isLandscape && !isLandscapeAlertDismissed && (
+          <div className="nes-container is-rounded is-dark relative flex items-center text-center">
+            <p className="px-4">Tip: rotate your phone!</p>
+            <button
+              className="absolute right-4"
+              onClick={toggleIsLandscapeAlertDismissed}
+            >
+              <i className="nes-icon close is-small before:!text-white" />
+            </button>
+          </div>
+        )}
         <div className="flex h-full w-full items-center justify-center">
           <div className="grid w-24 grid-cols-2 content-start gap-2 p-2">
             <button
