@@ -4,7 +4,7 @@ import { Modal } from '@/Components/Modal'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 import { Badge } from '@/Types'
-import { didBadgeTask, getBadgeProgress } from '@/Util/badges'
+import { didBadgeTask, getBadgeProgress, hasBadge } from '@/Util/badges'
 
 interface BadgeModalProps {
   badge: Badge | null
@@ -33,7 +33,10 @@ export const BadgeModal: React.FC<BadgeModalProps> = ({
           <img
             src={badge?.icon_path}
             alt={badge?.title}
-            className="w-1/5 max-w-[64px]"
+            className={classNames(
+              'w-1/5 max-w-[64px]',
+              badge && !hasBadge(user, badge) && 'grayscale',
+            )}
           />
           <p>{badge?.description}</p>
         </div>
@@ -44,7 +47,7 @@ export const BadgeModal: React.FC<BadgeModalProps> = ({
               <div
                 className={classNames(
                   'flex items-center gap-4',
-                  !didBadgeTask(user, badgeTask) && 'opacity-50',
+                  !didBadgeTask(user, badgeTask) && 'grayscale',
                 )}
                 key={badgeTask.id}
               >

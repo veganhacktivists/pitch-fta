@@ -67,7 +67,7 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
               <button
                 className={classNames(
                   'flex flex-col items-center gap-4 sm:w-1/4',
-                  !hasBadge(user, badge) && 'opacity-50',
+                  !hasBadge(user, badge) && 'grayscale',
                 )}
                 key={badge.id}
                 onClick={() => onClickBadge(badge)}
