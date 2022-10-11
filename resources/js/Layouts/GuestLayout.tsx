@@ -17,7 +17,7 @@ export const GuestLayout: ParentComponent = ({ children }) => {
             <nav>
               <div className="grid h-20 place-items-center px-4 text-white">
                 <Link href="/">
-                  <ApplicationLogo className="text-xl" />
+                  <ApplicationLogo className="h-12 w-12" />
                 </Link>
               </div>
             </nav>

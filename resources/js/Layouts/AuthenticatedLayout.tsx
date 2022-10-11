@@ -31,7 +31,7 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
               </div>
               <div className="flex-1 text-center">
                 <Link href="/">
-                  <ApplicationLogo className="text-xl" />
+                  <ApplicationLogo className="h-12 w-12" />
                 </Link>
               </div>
 
