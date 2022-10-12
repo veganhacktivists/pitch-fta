@@ -54,7 +54,7 @@ export const BadgeModal: React.FC<BadgeModalProps> = ({
                 <img
                   src={badgeTask.icon_path}
                   alt={badgeTask.title}
-                  className="w-1/5 max-w-[64px]"
+                  className="w-1/5 max-w-[64px] [image-rendering:auto]"
                 />
                 <p>{badgeTask.title}</p>
               </div>
