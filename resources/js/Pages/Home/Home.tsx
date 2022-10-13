@@ -9,8 +9,8 @@ import { VoteCount } from '@/Components/VoteCount'
 import { ShareModal } from './ShareModal'
 import useTypedPage from '@/Hooks/useTypedPage'
 import { Badge } from '@/Types'
-import { BadgeModal } from './BadgeModal'
 import { hasBadge } from '@/Util/badges'
+import { BadgeDescriptionModal } from './BadgeDescriptionModal'
 
 interface HomePageProps {
   badges: Badge[]
@@ -91,7 +91,7 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
         </div>
       </div>
       <ShareModal isOpen={isShareModalOpen} setIsOpen={setIsShareModalOpen} />
-      <BadgeModal
+      <BadgeDescriptionModal
         isOpen={isBadgeModalOpen}
         badge={selectedBadge}
         setIsOpen={setIsBadgeModalOpen}

@@ -17,6 +17,7 @@ class BadgeTask extends Model
         'completion_message',
         'badge_id',
         'permalink',
+        'num_votes',
     ];
 
     protected $hidden = ['permalink'];

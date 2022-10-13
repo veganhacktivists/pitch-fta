@@ -95,7 +95,7 @@ const RegisterPage = () => {
             <InputError message={errors.name} />
           </FormField>
 
-          <PrimaryButton className="ml-4">Register</PrimaryButton>
+          <PrimaryButton className="translate-x-[2px]">Register</PrimaryButton>
         </form>
       </div>
       <div className="mt-4 text-center">

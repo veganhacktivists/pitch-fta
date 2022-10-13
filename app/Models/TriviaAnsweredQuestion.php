@@ -19,11 +19,15 @@ class TriviaAnsweredQuestion extends Model
 
     public function question(): BelongsTo
     {
-        return $this->belongsTo(TriviaQuestion::class);
+        return $this->belongsTo(
+            TriviaQuestion::class,
+            'trivia_question_id',
+            'id'
+        );
     }
 
     public function answer(): BelongsTo
     {
-        return $this->belongsTo(TriviaAnswer::class);
+        return $this->belongsTo(TriviaAnswer::class, 'trivia_answer_id', 'id');
     }
 }

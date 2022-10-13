@@ -81,7 +81,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
             <InputError message={errors.password} />
           </FormField>
 
-          <PrimaryButton>Log in</PrimaryButton>
+          <PrimaryButton className="translate-x-[2px]">Log in</PrimaryButton>
         </form>
       </div>
       <div className="mt-4 text-center">

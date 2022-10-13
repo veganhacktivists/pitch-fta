@@ -12,7 +12,7 @@ interface BadgeModalProps {
   setIsOpen: (isOpen: boolean) => void
 }
 
-export const BadgeModal: React.FC<BadgeModalProps> = ({
+export const BadgeDescriptionModal: React.FC<BadgeModalProps> = ({
   badge,
   isOpen,
   setIsOpen,
@@ -71,7 +71,9 @@ export const BadgeModal: React.FC<BadgeModalProps> = ({
             )}
           </>
         )}
-        <PrimaryButton onClick={() => setIsOpen(false)}>Continue</PrimaryButton>
+        <PrimaryButton className="w-full" onClick={() => setIsOpen(false)}>
+          Continue
+        </PrimaryButton>
       </div>
     </Modal>
   )

@@ -51,7 +51,9 @@ const RouteUserBasedOnEmailPage = () => {
             <InputError message={errors.email} />
           </FormField>
 
-          <PrimaryButton type="submit">Continue</PrimaryButton>
+          <PrimaryButton type="submit" className="translate-x-[2px]">
+            Continue
+          </PrimaryButton>
         </form>
       </div>
     </GuestLayout>

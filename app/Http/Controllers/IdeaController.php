@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Badge;
 use App\Models\Idea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,6 +46,12 @@ class IdeaController extends Controller
         ]);
 
         $user->castVote($idea);
+
+        $innovatorBadge = Badge::where('title', 'The Innovator')->first();
+        if ($innovatorBadge && !$user->hasBadge($innovatorBadge)) {
+            $user->badges()->attach($innovatorBadge->id);
+            session()->flash('badge', $innovatorBadge);
+        }
 
         return redirect()
             ->route('ideas.index')

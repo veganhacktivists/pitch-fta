@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Badge;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -39,7 +40,16 @@ class RegisteredUserController extends Controller
             $referrer = User::where('referral_code', $referralCode)->first();
 
             if ($referrer) {
-                $referrer->awardvotes(self::NUM_VOTES_FOR_REFERRAL);
+                $referrer->awardVotes(self::NUM_VOTES_FOR_REFERRAL);
+
+                $recruiterBadge = Badge::where(
+                    'title',
+                    'The Recruiter'
+                )->first();
+
+                if ($recruiterBadge && !$referrer->hasBadge($recruiterBadge)) {
+                    $referrer->badges()->attach($recruiterBadge->id);
+                }
 
                 $user->referrer_id = $referrer->id;
                 $user->save();

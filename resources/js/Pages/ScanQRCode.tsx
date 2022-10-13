@@ -16,21 +16,40 @@ import { useToggleState } from '@/Hooks/useToggleState'
 const ScanQRCodePage = () => {
   const {
     props: {
-      flash: { message, badge, badgeTask, progress },
+      flash: { badge, badgeTask },
     },
   } = useTypedPage()
   const route = useRoute()
   const { post, processing } = useForm()
 
   const {
-    isToggled: isConfirmationModalOpen,
-    setIsToggled: setIsConfirmationModalOpen,
-    toggle: toggleConfirmationModal,
+    isToggled: isStatusModalOpen,
+    setIsToggled: setIsStatusModalOpen,
+    toggle: toggleStatusModal,
   } = useToggleState(false)
 
+  const [message, setMessage] = useState('')
   const [isInvalidQRCode, setIsInvalidQRCode] = useState(false)
   const [qrData, setQrData] = useState('')
   const scanner = useRef<QRCodeScannerRef>(null)
+
+  useEffect(() => {
+    const onBadgeObtainedModalClosed = () => {
+      scanner.current?.resume()
+    }
+
+    window.addEventListener(
+      'badgeObtainedModalClosed',
+      onBadgeObtainedModalClosed,
+    )
+
+    return () => {
+      window.removeEventListener(
+        'badgeObtainedModalClosed',
+        onBadgeObtainedModalClosed,
+      )
+    }
+  }, [])
 
   useEffect(() => {
     if (!qrData) return
@@ -39,24 +58,37 @@ const ScanQRCodePage = () => {
       onStart() {
         scanner.current?.pause()
       },
-      onSuccess() {
+      onSuccess({
+        props: {
+          flash: { message: m },
+        },
+      }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any) {
         setQrData('')
-        setIsConfirmationModalOpen(true)
+        setMessage(m)
       },
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [message, qrData])
+  }, [qrData])
 
   useEffect(() => {
-    setIsConfirmationModalOpen(isInvalidQRCode)
-  }, [isInvalidQRCode, setIsConfirmationModalOpen])
+    setIsStatusModalOpen(isInvalidQRCode)
+  }, [isInvalidQRCode, setIsStatusModalOpen])
 
   useEffect(() => {
-    if (!isConfirmationModalOpen) {
+    if (badge || badgeTask) {
+      setIsStatusModalOpen(false)
+    } else if (message) {
+      setIsStatusModalOpen(true)
+    }
+  }, [badge, badgeTask, message, setIsStatusModalOpen])
+
+  useEffect(() => {
+    if (!isStatusModalOpen) {
       setIsInvalidQRCode(false)
       scanner.current?.resume()
     }
-  }, [isConfirmationModalOpen])
+  }, [isStatusModalOpen])
 
   const onScanSuccess = useCallback(({ data }: QRCodeScannerResult) => {
     try {
@@ -87,8 +119,11 @@ const ScanQRCodePage = () => {
         )}
       </SizeWatcher>
       <Modal
-        isOpen={processing || isConfirmationModalOpen}
-        setIsOpen={setIsConfirmationModalOpen}
+        isOpen={processing || isStatusModalOpen}
+        setIsOpen={setIsStatusModalOpen}
+        afterLeave={() => {
+          setMessage('')
+        }}
       >
         <div className="flex flex-col gap-4 text-white">
           {processing && <p className="text-white">Scanning...</p>}
@@ -98,49 +133,7 @@ const ScanQRCodePage = () => {
             </p>
           )}
           {message && <p>{message}</p>}
-          {badgeTask?.completion_message && (
-            <div className="flex items-center gap-3">
-              <img
-                src={badgeTask.icon_path}
-                alt={badgeTask.title}
-                className="w-1/5 max-w-[64px]"
-              />
-              <p>{badgeTask.completion_message}</p>
-            </div>
-          )}
-          {progress && (
-            <>
-              <p>
-                You're one step closer towards getting "{badgeTask?.badge.title}
-                !"
-              </p>
-              <progress
-                className="nes-progress is-success"
-                value={progress}
-                max={badgeTask?.badge.tasks.length}
-              />
-            </>
-          )}
-          {badge?.completion_message && (
-            <>
-              <hr />
-              <h2 className="text-sm">New badge earned: {badge.title}</h2>
-              <div>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={badge.icon_path}
-                    alt={badge.title}
-                    className="w-1/5 max-w-[64px]"
-                  />
-                  <p>{badge.completion_message}</p>
-                </div>
-              </div>
-            </>
-          )}
-
-          <PrimaryButton onClick={toggleConfirmationModal}>
-            Continue
-          </PrimaryButton>
+          <PrimaryButton onClick={toggleStatusModal}>Continue</PrimaryButton>
         </div>
       </Modal>
     </AuthenticatedLayout>

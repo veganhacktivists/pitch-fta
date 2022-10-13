@@ -1,9 +1,11 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Link } from '@inertiajs/inertia-react'
 import { ParentComponent } from '@/Types/components'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
 import useRoute from '@/Hooks/useRoute'
 import { SizeWatcher } from '@/Components/SizeWatcher'
+import useTypedPage from '@/Hooks/useTypedPage'
+import { BadgeObtainedModal } from '@/Components/BadgeObtainedModal'
 
 interface AuthenticatedLayoutProps {
   backRoute?: string
@@ -16,6 +18,20 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
   renderNav,
 }) => {
   const route = useRoute()
+
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
+
+  const {
+    props: {
+      flash: { badge, badgeTask, progress },
+    },
+  } = useTypedPage()
+
+  useEffect(() => {
+    if (badge || badgeTask) {
+      setIsBadgeModalOpen(true)
+    }
+  }, [badge, badgeTask])
 
   return (
     <SizeWatcher isFullScreen>
@@ -41,6 +57,13 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
           <main className="flex h-full flex-col overflow-hidden">
             {children}
           </main>
+          <BadgeObtainedModal
+            badge={badge}
+            badgeTask={badgeTask}
+            progress={progress}
+            isOpen={isBadgeModalOpen}
+            setIsOpen={setIsBadgeModalOpen}
+          />
         </div>
       )}
     </SizeWatcher>

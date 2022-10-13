@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Badge;
 use App\Models\Doodle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +11,6 @@ use Inertia\Inertia;
 
 class DoodleController extends Controller
 {
-    const NUM_VOTES_ON_FIRST_DOODLE = 3;
-
     public function index()
     {
         return Inertia::render('Doodles/Index', [
@@ -37,12 +36,12 @@ class DoodleController extends Controller
         ]);
 
         // First doodle
-        if ($user->doodles()->count() === 1) {
-            $user->awardVotes(self::NUM_VOTES_ON_FIRST_DOODLE);
-            session()->flash(
-                'message',
-                'Thanks for submitting a doodle! You earned three more votes.'
-            );
+        $artistBadge = Badge::where('title', 'The Artist')->first();
+        if ($artistBadge && !$user->hasBadge($artistBadge)) {
+            $user->awardVotes($artistBadge->num_votes);
+            $user->badges()->attach($artistBadge->id);
+
+            session()->flash('badge', $artistBadge);
         }
 
         return redirect()->route('doodles.show', $doodle->id);

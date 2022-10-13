@@ -15,6 +15,7 @@ class Badge extends Model
         'description',
         'completion_message',
         'icon_path',
+        'num_votes',
     ];
 
     public function tasks(): HasMany

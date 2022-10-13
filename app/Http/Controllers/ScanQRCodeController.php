@@ -25,18 +25,27 @@ class ScanQRCodeController extends Controller
             $badgeTask->loadMissing('badge', 'badge.tasks');
 
             $user->badgeTasks()->attach($badgeTask->id);
+            $user->awardVotes($badgeTask->num_votes);
 
             $numBadgeTasks = $badgeTask->badge->tasks->count();
-            $numCompleteTasks = $user->badgeTasks()->count();
-            $didCompleteAllBadgeTasks = $numCompleteTasks === $numBadgeTasks;
+            $numCompletedTasks = $user
+                ->badgeTasks()
+                ->whereIn(
+                    'badge_tasks.id',
+                    $badgeTask->badge->tasks->pluck('id')
+                )
+                ->count();
+            $didCompleteAllBadgeTasks = $numCompletedTasks === $numBadgeTasks;
+
             session()->flash('badge_task', $badgeTask);
 
             if ($didCompleteAllBadgeTasks) {
                 $user->badges()->attach($badgeTask->badge->id);
+                $user->awardVotes($badgeTask->badge->num_votes);
 
                 session()->flash('badge', $badgeTask->badge);
             } else {
-                session()->flash('progress', $numCompleteTasks);
+                session()->flash('progress', $numCompletedTasks);
             }
         } else {
             session()->flash(

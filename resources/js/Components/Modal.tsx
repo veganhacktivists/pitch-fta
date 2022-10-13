@@ -1,8 +1,8 @@
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Transition, TransitionEvents } from '@headlessui/react'
 import React, { Fragment } from 'react'
 import { ParentComponent } from '@/Types/components'
 
-interface ModalProps {
+interface ModalProps extends TransitionEvents {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
@@ -11,9 +11,10 @@ export const Modal: ParentComponent<ModalProps> = ({
   isOpen,
   setIsOpen,
   children,
+  ...transitionRootProps
 }) => {
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment} {...transitionRootProps}>
       <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
         <Transition.Child
           as={Fragment}

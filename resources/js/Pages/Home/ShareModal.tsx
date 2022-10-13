@@ -42,7 +42,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         Please share this app with other conference attendees! If someone signs
         up using your referral link, you will receive 10 votes!
       </p>
-      <PrimaryButton className="mt-4" onClick={copyLink}>
+      <PrimaryButton className="mt-4 w-full" onClick={copyLink}>
         {isCopied ? 'Copied!' : 'Copy referral link'}
       </PrimaryButton>
     </Modal>

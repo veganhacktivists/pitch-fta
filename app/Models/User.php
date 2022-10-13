@@ -61,7 +61,11 @@ class User extends Authenticatable
 
     public function awardVotes(int $numVotes)
     {
-        return $this->increment('num_votes', $numVotes);
+        if ($numVotes <= 0) {
+            return;
+        }
+
+        $this->increment('num_votes', $numVotes);
     }
 
     public function castVote(Idea $idea, int $numVotes = 1)
@@ -84,6 +88,13 @@ class User extends Authenticatable
             'num_votes',
             min($this->num_votes, $numVotes)
         );
+    }
+
+    public function hasBadge(Badge $badge)
+    {
+        return $this->badges()
+            ->where('badge_id', $badge->id)
+            ->exists();
     }
 
     protected static function boot()

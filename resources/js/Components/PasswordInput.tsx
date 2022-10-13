@@ -24,7 +24,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   }, [autoFocus, isText])
 
   return (
-    <div className="relative flex items-center">
+    <div className="relative">
       <TextInput
         ref={inputRef}
         type={isText ? 'text' : 'password'}
@@ -38,7 +38,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
       />
 
       <button
-        className="absolute right-0 h-full p-4 uppercase"
+        className="absolute -right-[2px] -top-[2px] h-full p-4 uppercase"
         onClick={toggleIsText}
         type="button"
       >
