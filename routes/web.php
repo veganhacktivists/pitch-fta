@@ -51,7 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/trivia', TriviaController::class)->name('trivia.answer');
 
     Route::get('/scan', ScanQRCodeController::class)->name('scan');
-    Route::post(
+    Route::match(
+        ['GET', 'POST'],
         '/scan/{badge_task:permalink}',
         ScanQRCodeController::class
     )->name('scan.submit');

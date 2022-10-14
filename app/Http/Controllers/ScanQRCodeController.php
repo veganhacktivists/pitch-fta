@@ -9,9 +9,9 @@ use Inertia\Inertia;
 
 class ScanQRCodeController extends Controller
 {
-    public function __invoke(Request $request, BadgeTask $badgeTask)
+    public function __invoke(Request $request, BadgeTask $badgeTask = null)
     {
-        if ($request->isMethod('GET')) {
+        if ($request->isMethod('GET') && !$badgeTask) {
             return Inertia::render('ScanQRCode');
         }
 
@@ -54,6 +54,10 @@ class ScanQRCodeController extends Controller
             );
         }
 
-        return redirect()->back();
+        if ($request->isMethod('POST')) {
+            return redirect()->back();
+        } else {
+            return redirect()->route('scan');
+        }
     }
 }
