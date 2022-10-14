@@ -11,6 +11,7 @@ import useTypedPage from '@/Hooks/useTypedPage'
 import { Badge } from '@/Types'
 import { hasBadge } from '@/Util/badges'
 import { BadgeDescriptionModal } from './BadgeDescriptionModal'
+import { AboutModal } from './AboutModal'
 
 interface HomePageProps {
   badges: Badge[]
@@ -25,6 +26,7 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
   const route = useRoute()
 
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
 
@@ -47,8 +49,13 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
     setIsBadgeModalOpen(true)
   }, [])
 
+  const onClickAbout = useCallback(() => setIsAboutModalOpen(true), [])
+
   return (
-    <AuthenticatedLayout renderNav={() => <VoteCount />}>
+    <AuthenticatedLayout
+      renderLeft={() => <button onClick={onClickAbout}>About</button>}
+      renderNav={() => <VoteCount />}
+    >
       <Head title="Welcome" />
       <div className="flex h-full flex-col gap-4 overflow-auto">
         <div className="grid grid-cols-2 gap-4 px-4">
@@ -90,6 +97,7 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
           </div>
         </div>
       </div>
+      <AboutModal isOpen={isAboutModalOpen} setIsOpen={setIsAboutModalOpen} />
       <ShareModal isOpen={isShareModalOpen} setIsOpen={setIsShareModalOpen} />
       <BadgeDescriptionModal
         isOpen={isBadgeModalOpen}
