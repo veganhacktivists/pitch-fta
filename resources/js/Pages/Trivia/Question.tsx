@@ -1,6 +1,6 @@
 import React from 'react'
 import { Head } from '@inertiajs/inertia-react'
-import { TriviaQuestion } from '@/Types'
+import { TriviaAnswer, TriviaQuestion } from '@/Types'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { QuestionForm } from './QuestionForm'
 import { VoteCount } from '@/Components/VoteCount'
@@ -9,15 +9,25 @@ import { PrimaryButtonLink } from '@/Components/Forms/PrimaryButton'
 
 interface TriviaQuestionPageProps {
   question: TriviaQuestion
+  correctAnswer?: TriviaAnswer
+  chosenAnswer?: TriviaAnswer
 }
 const TriviaQuestionPage: React.FC<TriviaQuestionPageProps> = ({
   question,
+  correctAnswer,
+  chosenAnswer,
 }) => {
   return (
     <AuthenticatedLayout backRoute="home" renderNav={() => <VoteCount />}>
       <Head title={question ? question.text : 'Trivia'} />
       <Alert observable={question} />
-      {question && <QuestionForm question={question} />}
+      {question && (
+        <QuestionForm
+          correctAnswer={correctAnswer}
+          chosenAnswer={chosenAnswer}
+          question={question}
+        />
+      )}
       {!question && (
         <div className="flex h-full items-center">
           <div className="nes-container is-dark is-rounded with-title">

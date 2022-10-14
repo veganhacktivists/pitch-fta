@@ -6,7 +6,6 @@ use App\Models\Badge;
 use App\Models\TriviaAnswer;
 use App\Models\TriviaAnsweredQuestion;
 use App\Models\TriviaQuestion;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +18,14 @@ class TriviaController extends Controller
         $user = Auth::user();
 
         if ($request->isMethod('GET')) {
-            return Inertia::render('Trivia/Question', [
+            $props = session('props', [
                 'question' => TriviaQuestion::with('answers')
                     ->whereNotAnsweredBy($user)
                     ->inRandomOrder()
                     ->first(),
             ]);
+
+            return Inertia::render('Trivia/Question', $props);
         }
 
         $request->validate([
@@ -38,6 +39,21 @@ class TriviaController extends Controller
             session()->flash('message', "Correct! You've earned a new vote.");
         } else {
             session()->flash('message', 'Oh no! Your answer was incorrect.');
+
+            $question = $answer
+                ->question()
+                ->with('answers')
+                ->first();
+
+            $correctAnswer = $question->answers
+                ->where('is_correct', true)
+                ->first();
+
+            session()->flash('props', [
+                'question' => $question,
+                'correctAnswer' => $correctAnswer,
+                'chosenAnswer' => $answer,
+            ]);
         }
 
         $user->answeredQuestions()->create([
