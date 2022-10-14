@@ -16,7 +16,9 @@
         @vite('resources/js/app.tsx')
         @inertiaHead
     </head>
-    <body class="font-sans text-xs w-screen street overflow-hidden">
-        @inertia
+    <body class="font-sans text-xs street">
+        <div class="app-container" id="app-container">
+            @inertia
+        </div>
     </body>
 </html>

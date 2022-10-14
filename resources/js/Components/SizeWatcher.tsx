@@ -19,8 +19,18 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
   useEffect(() => {
     if (isFullScreen) {
       const onResize = () => {
-        setHeight(window.innerHeight)
-        setWidth(window.innerWidth)
+        const appContainer = document.getElementById('app-container')
+
+        setHeight(
+          appContainer instanceof HTMLElement
+            ? appContainer.clientHeight
+            : window.innerHeight,
+        )
+        setWidth(
+          appContainer instanceof HTMLElement
+            ? appContainer.clientWidth
+            : window.innerWidth,
+        )
       }
 
       onResize()

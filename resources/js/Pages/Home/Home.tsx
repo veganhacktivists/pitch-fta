@@ -69,11 +69,11 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
         </div>
         <div className="nes-container is-rounded is-dark with-title">
           <h2 className="title">Badges</h2>
-          <div className="grid grid-cols-2 place-items-center gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-2 place-items-center gap-4">
             {badges.map((badge) => (
               <button
                 className={classNames(
-                  'flex flex-col items-center gap-4 sm:w-1/4',
+                  'flex flex-col items-center gap-4',
                   !hasBadge(user, badge) && 'grayscale',
                 )}
                 key={badge.id}

@@ -16,14 +16,19 @@ body {
   image-rendering: pixelated;
 }
 
+.app-container {
+  @apply mx-auto relative h-screen overflow-hidden;
+}
+
+@media (pointer:fine) {
+  .app-container {
+    @apply max-w-lg;
+  }
+}
+
 .street {
   background-position: top left;
   background-image: url(/sprites/street.png);
-}
-
-.sidewalk {
-  background-position: top left;
-  background-image: url(/sprites/sidewalk.png);
 }
 
 .nes-container.is-dark {
