@@ -30,7 +30,7 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
       }
 
       const onOrientationChange = () => {
-        window.scrollTo({
+        document.querySelector('.overflow-auto')?.scrollTo({
           top: 0,
         })
       }
