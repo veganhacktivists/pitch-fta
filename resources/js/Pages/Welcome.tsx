@@ -30,33 +30,33 @@ const WelcomePage = () => {
                 alt=""
               />
             </div>
-            <div className="grid aspect-square place-items-center bg-gray-200">
+            <div className="flex aspect-square items-center justify-center bg-gray-200">
               <img src="/sprites/animals/pig.gif" className="w-1/2" alt="" />
             </div>
-            <div className="grid aspect-square place-items-center bg-white">
+            <div className="flex aspect-square items-center justify-center bg-white">
               <img src="/sprites/animals/sheep.gif" className="w-1/2" alt="" />
             </div>
-            <div className="grid aspect-square place-items-center bg-gray-200">
+            <div className="flex aspect-square items-center justify-center bg-gray-200">
               <img
                 src="/sprites/animals/chicken.gif"
                 className="w-1/2"
                 alt=""
               />
             </div>
-            <div className="grid aspect-square place-items-center bg-gray-200">
+            <div className="flex aspect-square items-center justify-center bg-gray-200">
               <img
                 src="/sprites/animals/fish-blue.gif"
                 className="w-3/4"
                 alt=""
               />
             </div>
-            <div className="grid aspect-square place-items-center bg-white">
+            <div className="flex aspect-square items-center justify-center bg-white">
               <img src="/sprites/animals/cow.gif" className="w-1/2" alt="" />
             </div>
-            <div className="grid aspect-square place-items-center bg-gray-200">
+            <div className="flex aspect-square items-center justify-center bg-gray-200">
               <img src="/sprites/animals/duck.gif" className="w-1/2" alt="" />
             </div>
-            <div className="grid aspect-square place-items-center bg-white">
+            <div className="flex aspect-square items-center justify-center bg-white">
               <img src="/sprites/animals/goat.gif" className="w-1/2" alt="" />
             </div>
           </div>
