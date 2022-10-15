@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="/manifest.json">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -20,5 +21,9 @@
         <div class="app-container" id="app-container">
             @inertia
         </div>
+
+        <script>
+            if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js') }
+        </script>
     </body>
 </html>
