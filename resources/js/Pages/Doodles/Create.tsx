@@ -8,7 +8,7 @@ import { SketchCanvas, SketchCanvasRef } from '@/Components/SketchCanvas'
 import { useToggleState } from '@/Hooks/useToggleState'
 import { SizeWatcher } from '@/Components/SizeWatcher'
 
-const CANVAS_PADDING = 10
+const CANVAS_PADDING = 20
 
 enum StrokeWidth {
   Pixel = 1,
@@ -28,9 +28,6 @@ const DoodlesCreatePage = () => {
     isToggled: isLandscapeAlertDismissed,
     toggle: toggleIsLandscapeAlertDismissed,
   } = useToggleState(false)
-  const [isLandscape, setIsLandscape] = useState(
-    window.outerWidth > window.outerHeight,
-  )
   const [isEmpty, setIsEmpty] = useState(false)
   const [isErasing, setIsErasing] = useState(false)
   const [strokeColor, setStrokeColor] = useState<string>(colors.gray[900])
@@ -62,20 +59,6 @@ const DoodlesCreatePage = () => {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
-
-  useEffect(() => {
-    const onOrientationChange = () => {
-      setIsLandscape(window.outerWidth > window.outerHeight)
-    }
-
-    onOrientationChange()
-
-    window.addEventListener('resize', onOrientationChange)
-
-    return () => {
-      window.removeEventListener('resize', onOrientationChange)
-    }
-  }, [])
 
   const onChangeStrokeColor = useCallback((color: string) => {
     setStrokeColor(color)
@@ -115,9 +98,9 @@ const DoodlesCreatePage = () => {
         className={classNames('h-full')}
         id="doodle-form"
       >
-        {!isLandscape && !isLandscapeAlertDismissed && (
-          <div className="nes-container is-rounded is-dark relative flex items-center text-center">
-            <p className="px-4">Tip: Rotate your phone!</p>
+        {!isLandscapeAlertDismissed && (
+          <div className="nes-container is-rounded is-dark relative flex items-center text-center landscape:hidden">
+            <p className="px-4">Tip: Rotate your device!</p>
             <button
               className="absolute right-4"
               onClick={toggleIsLandscapeAlertDismissed}
