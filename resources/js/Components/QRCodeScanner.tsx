@@ -87,10 +87,7 @@ export const QRCodeScanner = forwardRef<QRCodeScannerRef, QRCodeScannerProps>(
           <div className="flex h-full items-center">
             <div className="nes-container is-dark is-rounded with-title">
               <h2 className="title">Heads up!</h2>
-              <p>
-                You need to allow us to use your camera in order to scan QR
-                codes!
-              </p>
+              <p>To scan QR codes, you need to allow us to use your camera!</p>
             </div>
           </div>
         )}

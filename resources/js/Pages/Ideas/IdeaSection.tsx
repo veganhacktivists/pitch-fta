@@ -42,10 +42,10 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
         <div className="nes-container is-rounded is-dark with-title">
           <h2 className="title">Hey!</h2>
           <p>
-            It looks like nobody has submitted an idea yet. Want to be the
-            first?
+            It looks like nobody has submitted an idea yet. Want to break the
+            ice?
           </p>
-          <PrimaryButton className="mt-4" onClick={toggleCreateModal}>
+          <PrimaryButton className="mt-4 w-full" onClick={toggleCreateModal}>
             New idea
           </PrimaryButton>
         </div>

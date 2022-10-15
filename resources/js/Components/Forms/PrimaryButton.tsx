@@ -1,39 +1,22 @@
 import React from 'react'
 import classNames from 'classnames'
-import { InertiaLinkProps, Link } from '@inertiajs/inertia-react'
+import { Button, ButtonLink, ButtonLinkProps } from './Button'
 
 interface PrimaryButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
-  children,
   className,
-  disabled,
   ...props
 }) => {
-  return (
-    <button
-      className={classNames(
-        'nes-btn ml-1 mr-0',
-        {
-          'is-success': !disabled,
-          'is-disabled': disabled,
-        },
-        className,
-      )}
-      disabled={disabled}
-      {...props}
-    >
-      {children}
-    </button>
-  )
+  return <Button className={classNames('is-success', className)} {...props} />
 }
 
-export const PrimaryButtonLink: React.FC<InertiaLinkProps> = ({
+export const PrimaryButtonLink: React.FC<ButtonLinkProps> = ({
   className,
   ...props
 }) => {
   return (
-    <Link className={classNames('nes-btn is-success', className)} {...props} />
+    <ButtonLink className={classNames('is-success', className)} {...props} />
   )
 }

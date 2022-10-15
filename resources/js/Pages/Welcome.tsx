@@ -19,7 +19,8 @@ const WelcomePage = () => {
               alt="Welcome to the AVA Conference"
               className="w-5/12"
             />
-            <h1 className="text-base">Welcome to AVA</h1>
+            <h1>Welcome to AVA</h1>
+            <h2 className="text-base">Pitch for the Animals</h2>
           </div>
           <div className="grid grid-cols-4">
             <div className="grid place-items-center bg-white">
@@ -66,7 +67,7 @@ const WelcomePage = () => {
                 href={route('route_based_on_email.show')}
                 className="nes-btn is-primary landscape:scale-150"
               >
-                Continue
+                Get started
               </PrimaryButtonLink>
             </div>
             <div className="aspect-square bg-neutral-900 bg-opacity-90" />

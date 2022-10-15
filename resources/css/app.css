@@ -43,6 +43,19 @@ body {
   animation: blink 1s infinite steps(1);
 }
 
+.nes-btn.is-pink {
+  @apply bg-pink-500 text-white;
+}
+
+.nes-btn.is-pink::after {
+  @apply shadow-pink-600;
+  box-shadow: inset -4px -4px var(--tw-shadow-color);
+}
+
+.nes-btn.is-pink:active:not(.is-disabled)::after {
+  box-shadow: inset 4px 4px var(--tw-shadow-color);
+}
+
 .rounded-4px {
   clip-path: polygon(
     0px 8px,

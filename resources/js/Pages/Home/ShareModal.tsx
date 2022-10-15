@@ -40,7 +40,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <p className="text-sm text-white">
         Please share this app with other conference attendees! If someone signs
-        up using your referral link, you will receive 10 votes!
+        up using your referral link, you will receive 10 votes and the Recruiter
+        badge!
       </p>
       <PrimaryButton className="mt-4 w-full" onClick={copyLink}>
         {isCopied ? 'Copied!' : 'Copy referral link'}

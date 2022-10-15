@@ -117,7 +117,7 @@ const DoodlesCreatePage = () => {
       >
         {!isLandscape && !isLandscapeAlertDismissed && (
           <div className="nes-container is-rounded is-dark relative flex items-center text-center">
-            <p className="px-4">Tip: rotate your phone!</p>
+            <p className="px-4">Tip: Rotate your phone!</p>
             <button
               className="absolute right-4"
               onClick={toggleIsLandscapeAlertDismissed}

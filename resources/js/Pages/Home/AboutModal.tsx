@@ -1,6 +1,8 @@
 import React from 'react'
 import { Modal } from '@/Components/Modal'
 import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
+import { ButtonLink } from '@/Components/Forms/Button'
+import colors from 'tailwindcss/colors'
 
 interface AboutModalProps {
   isOpen: boolean
@@ -16,21 +18,28 @@ export const AboutModal: React.FC<AboutModalProps> = ({
       <div className="flex flex-col gap-4">
         <div className="contents text-sm text-white">
           <p>
-            Welcome to the app! This app was built by the Vegan Hacktivists team
-            in order to collect app ideas from others in the animal rights
-            movement.
+            Welcome! This app was built by Vegan Hacktivists to crowdsource
+            innovative app ideas for the movement. You can submit ideas of your
+            own and vote on your favorites.
           </p>
           <p>
-            Using this app, you can vote on ideas and submit ideas of your own.
-            There's a twist, however! If you want to stack the odds in your
-            favor, you can complete certain tasks and collect badges which will
-            earn you more votes.
+            To stack the odds in your favor, you can complete in-app and live
+            activities to earn badges and more importantly, earn more votes.
           </p>
         </div>
 
         <PrimaryButton className="w-full" onClick={() => setIsOpen(false)}>
-          Continue
+          Got it!
         </PrimaryButton>
+
+        <ButtonLink
+          href="https://veganhacktivists.org/support"
+          className="is-pink w-full"
+          target="_blank"
+          isExternal
+        >
+          Support our work
+        </ButtonLink>
       </div>
     </Modal>
   )

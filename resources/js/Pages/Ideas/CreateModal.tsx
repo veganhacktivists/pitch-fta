@@ -81,13 +81,13 @@ export const CreateModal: React.FC<CreateModalProps> = ({
             <InputError message={errors.text} />
             <PrimaryButton type="submit">Submit</PrimaryButton>
             <p className="text-white">
-              Note: Submitting a new idea will use one of your votes!
+              Note: Submitting a new idea will cost 1 vote!
             </p>
           </>
         ) : (
           <>
             <p className="text-white">
-              In order to submit an idea, you need more votes!
+              To submit an idea, you need at least 1 vote!
             </p>
             <PrimaryButtonLink href={route('home')}>
               Earn more votes

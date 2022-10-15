@@ -106,9 +106,11 @@ export const VoteModal: React.FC<VoteModalProps> = ({
             </div>
           </>
         )}
-        <PrimaryButton>
-          Cast {data.num_votes} {data.num_votes === 1 ? 'vote' : 'votes'}
-        </PrimaryButton>
+        {user.num_votes > 0 && (
+          <PrimaryButton>
+            Cast {data.num_votes} {data.num_votes === 1 ? 'vote' : 'votes'}
+          </PrimaryButton>
+        )}
 
         <InputError message={errors.num_votes} />
       </form>

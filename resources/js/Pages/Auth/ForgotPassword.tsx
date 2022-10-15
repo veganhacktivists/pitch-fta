@@ -50,7 +50,7 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ status }) => {
           <InputError message={errors.email} />
 
           <PrimaryButton disabled={processing}>
-            Email Password Reset Link
+            Email password reset link
           </PrimaryButton>
           {status && <div className="nes-text is-success">{status}</div>}
         </form>

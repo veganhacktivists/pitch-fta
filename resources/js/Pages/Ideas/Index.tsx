@@ -10,6 +10,7 @@ import { VoteModal } from './VoteModal'
 import { useDismissable } from '@/Hooks/useDismissable'
 import { IdeaSection } from './IdeaSection'
 import { Button } from '@/Components/Forms/Button'
+import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 
 const DISMISSABLE_KEY_INSTRUCTIONS = 'ideas.instructions.dismissed'
 
@@ -88,18 +89,22 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
           <h2 className="title">
             {areInstructionsDismissed ? 'Help' : 'Hey there!'}
           </h2>
-          <p className="text-sm">
-            {!areInstructionsDismissed && 'You look new around here. '}
-            This is where you get to submit your awesome idea(s) for the next
-            project that the Vegan Hacktivists team will work on. In order to
-            submit an idea, click "New" in the top-right corner. If you'd like
-            to vote on an idea, simply click on the idea. Choose wisely,
-            however; your votes are limited!
-          </p>
+          <div className="flex flex-col gap-4">
+            <p className="text-sm">
+              {!areInstructionsDismissed && 'You look new around here. '}
+              This is where you get to vote on awesome ideas and submit your
+              own.
+            </p>
+            <p className="text-sm">
+              To post an idea, tap "New" in the top-right corner. To cast votes
+              for an idea, tap on it. Choose wisely, your votes are limited and
+              final!
+            </p>
 
-          <Button onClick={onDismissInstructions} className="mt-4">
-            Continue
-          </Button>
+            <PrimaryButton onClick={onDismissInstructions} className="w-full">
+              Continue
+            </PrimaryButton>
+          </div>
         </div>
       </div>
       <div

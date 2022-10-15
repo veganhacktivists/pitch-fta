@@ -36,7 +36,7 @@ const RouteUserBasedOnEmailPage = () => {
         >
           <FormField>
             <InputLabel htmlFor="email" className="pb-2">
-              Enter your email to join the VH@AVA experience.
+              Please enter your email.
             </InputLabel>
             <TextInput
               type="email"

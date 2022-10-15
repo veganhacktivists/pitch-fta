@@ -31,8 +31,8 @@ const DoodlesIndexPage: React.FC<DoodlesIndexPageProps> = ({ doodles }) => {
           <div className="nes-container is-rounded is-dark with-title">
             <h2 className="title">Hey!</h2>
             <p>
-              It looks like nobody has submitted a doodle yet. Want to be the
-              first?
+              It looks like nobody has submitted a doodle yet. Want to break the
+              ice?
             </p>
             <PrimaryButtonLink
               href={route('doodles.create')}

@@ -36,7 +36,7 @@ class TriviaController extends Controller
         if ($answer->is_correct) {
             $user->awardVotes(1);
 
-            session()->flash('message', "Correct! You've earned a new vote.");
+            session()->flash('message', "Correct! You've earned 1 vote.");
         } else {
             session()->flash('message', 'Oh no! Your answer was incorrect.');
 
