@@ -1,3 +1,4 @@
+import { isMobileBrowser } from '@/Util/device'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 
 interface SizeWatcherProps {
@@ -17,17 +18,29 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (isFullScreen) {
-      const onResize = () => {
-        const appContainer = document.getElementById('app-container')
+    const appContainer = document.getElementById('app-container')
+    const isMobile = isMobileBrowser()
 
+    if (isFullScreen) {
+      if (appContainer) {
+        appContainer.classList.add(
+          'mx-auto',
+          'relative',
+          'flex',
+          'h-screen',
+          'overflow-hidden',
+          'max-w-lg',
+        )
+      }
+
+      const onResize = () => {
         setHeight(
-          appContainer instanceof HTMLElement
+          !isMobile && appContainer instanceof HTMLElement
             ? appContainer.clientHeight
             : window.innerHeight,
         )
         setWidth(
-          appContainer instanceof HTMLElement
+          !isMobile && appContainer instanceof HTMLElement
             ? appContainer.clientWidth
             : window.innerWidth,
         )
@@ -43,12 +56,14 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
       }
     }
 
-    if (ref.current) {
-      const resizeObserver = new ResizeObserver(([el]) => {
-        setHeight(el.contentRect.height)
-        setWidth(el.contentRect.width)
-      })
+    const resizeObserver = new ResizeObserver(([el]) => {
+      setHeight(el.contentRect.height)
+      setWidth(el.contentRect.width)
+    })
 
+    if (isFullScreen && appContainer) {
+      resizeObserver.observe(appContainer)
+    } else if (ref.current) {
       resizeObserver.observe(ref.current)
     }
 

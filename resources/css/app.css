@@ -16,16 +16,6 @@ body {
   image-rendering: pixelated;
 }
 
-.app-container {
-  @apply mx-auto relative h-screen overflow-hidden;
-}
-
-@media (pointer:fine) {
-  .app-container {
-    @apply max-w-lg;
-  }
-}
-
 .street {
   background-position: top left;
   background-image: url(/sprites/street.png);

@@ -18,7 +18,7 @@
         @inertiaHead
     </head>
     <body class="font-sans text-xs street">
-        <div class="app-container" id="app-container">
+        <div id="app-container">
             @inertia
         </div>
 
