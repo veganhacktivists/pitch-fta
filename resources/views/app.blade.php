@@ -1,6 +1,8 @@
 @php
     use Detection\MobileDetect;
-    $isMobile = (new MobileDetect)->isMobile();
+    $detect = new MobileDetect();
+    $isMobile = $detect->isMobile();
+    $isIosChrome = $detect->isIOS() && $detect->isChrome();
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -34,6 +36,11 @@
         <script>
             // Register Service worker for Add to Home Screen option to work
             if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js') }
+
+            @if ($isIosChrome)
+                window.isIOS = true
+                window.isChrome = true
+            @endif
         </script>
     </body>
 </html>
