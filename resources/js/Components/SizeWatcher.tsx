@@ -1,4 +1,3 @@
-import { isMobileBrowser } from '@/Util/device'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 
 interface SizeWatcherProps {
@@ -19,28 +18,12 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
 
   useEffect(() => {
     const appContainer = document.getElementById('app-container')
-    const isMobile = isMobileBrowser()
 
     if (isFullScreen) {
-      if (appContainer) {
-        appContainer.classList.add(
-          'mx-auto',
-          'relative',
-          'flex',
-          'h-screen',
-          'overflow-hidden',
-          'max-w-lg',
-        )
-      }
-
       const onResize = () => {
-        setHeight(
-          !isMobile && appContainer instanceof HTMLElement
-            ? appContainer.clientHeight
-            : window.innerHeight,
-        )
+        setHeight(window.innerHeight)
         setWidth(
-          !isMobile && appContainer instanceof HTMLElement
+          appContainer instanceof HTMLElement
             ? appContainer.clientWidth
             : window.innerWidth,
         )

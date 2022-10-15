@@ -1,3 +1,7 @@
+@php
+    use Detection\MobileDetect;
+    $isMobile = (new MobileDetect)->isMobile();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -18,11 +22,16 @@
         @inertiaHead
     </head>
     <body class="font-sans text-xs street">
-        <div id="app-container">
-            @inertia
-        </div>
+        @if (!$isMobile)
+            <div class="mx-auto relative flex h-screen overflow-hidden max-w-lg" id="app-container">
+                @inertia
+            </div>
+        @else
+                @inertia
+        @endif
 
         <script>
+            // Register Service worker for Add to Home Screen option to work
             if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js') }
         </script>
     </body>

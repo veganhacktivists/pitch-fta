@@ -13,14 +13,14 @@ const WelcomePage = () => {
       {({ width, height }) => (
         <div style={{ width, height }} className="flex flex-col overflow-auto">
           <Head title="Welcome" />
-          <div className="flex h-full flex-col items-center justify-center gap-4 bg-white py-4 landscape:py-12">
+          <div className="flex h-full flex-col items-center justify-center gap-4 bg-white py-4 text-center landscape:py-12">
             <img
               src="/sprites/logo-ava.svg"
               alt="Welcome to the AVA Conference"
               className="w-5/12"
             />
             <h1>Welcome to AVA</h1>
-            <h2 className="text-base">Pitch for the Animals</h2>
+            <h2 className="px-4 text-base">Pitch for the Animals</h2>
           </div>
           <div className="grid grid-cols-4">
             <div className="grid place-items-center bg-white">
