@@ -40,19 +40,10 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
       window.addEventListener('orientationchange', onResize)
       window.addEventListener('orientationchange', onOrientationChange)
 
-      // HACK: This is to fix issues on Chrome when rotating phones
-      // For some reason, innerWidth and innerHeight don't get updated
-      // reliably after rotating on Chrome, so we use the outer width/height
-      // if necessary. After that, the inner width/height will be updated
-      // and will then take over.
-      const interval = setInterval(onResize, 1000)
-
       return () => {
         window.removeEventListener('resize', onResize)
         window.removeEventListener('orientationchange', onResize)
         window.removeEventListener('orientationchange', onOrientationChange)
-
-        clearInterval(interval)
       }
     }
 
