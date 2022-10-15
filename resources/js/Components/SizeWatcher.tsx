@@ -33,6 +33,9 @@ export const SizeWatcher: React.FC<SizeWatcherProps> = ({
         document.querySelector('.overflow-auto')?.scrollTo({
           top: 0,
         })
+
+        // HACK: This is to fix issues on iOS when rotating phones
+        setTimeout(onResize, 100)
       }
 
       onResize()
