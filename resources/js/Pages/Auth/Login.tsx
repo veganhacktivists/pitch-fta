@@ -55,6 +55,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
 
             <TextInput
               type="text"
+              id="email"
               name="email"
               value={data.email}
               className="w-full"
@@ -69,6 +70,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
             <InputLabel htmlFor="password">Pin</InputLabel>
 
             <PasswordInput
+              id="password"
               name="password"
               value={data.password}
               autoComplete="current-password"
@@ -89,7 +91,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ status }) => {
           className="mx-auto border-b border-gray-100 pb-1 text-gray-100"
           href={route('password.request')}
         >
-          Forgot your password?
+          Forgot your pin?
         </Link>
       </div>
     </GuestLayout>

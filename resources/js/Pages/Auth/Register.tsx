@@ -54,6 +54,7 @@ const RegisterPage = () => {
           <FormField>
             <InputLabel htmlFor="email">Email</InputLabel>
             <TextInput
+              id="email"
               type="email"
               name="email"
               value={data.email}
@@ -66,9 +67,10 @@ const RegisterPage = () => {
           </FormField>
 
           <FormField>
-            <InputLabel htmlFor="password">4-Digit Pin</InputLabel>
+            <InputLabel htmlFor="password">Create a 4-Digit Pin</InputLabel>
 
             <PasswordInput
+              id="password"
               name="password"
               value={data.password}
               autoComplete="new-password"
@@ -85,6 +87,7 @@ const RegisterPage = () => {
             <InputLabel htmlFor="name">Name (optional)</InputLabel>
 
             <TextInput
+              id="name"
               name="name"
               value={data.name}
               className="mt-1 block w-full"

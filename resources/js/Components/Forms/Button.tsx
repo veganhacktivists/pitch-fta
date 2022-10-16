@@ -38,11 +38,11 @@ export type ButtonLinkProps = ExternalLinkProps | InternalLinkProps
 export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
   // eslint-disable-next-line react/destructuring-assignment
   if (props.isExternal) {
-    const { className, ...rest } = props
+    const { className, isExternal, ...rest } = props
     // eslint-disable-next-line jsx-a11y/anchor-has-content
     return <a className={classNames('nes-btn', className)} {...rest} />
   }
 
-  const { className, ...rest } = props
+  const { className, isExternal, ...rest } = props
   return <Link className={classNames('nes-btn', className)} {...rest} />
 }

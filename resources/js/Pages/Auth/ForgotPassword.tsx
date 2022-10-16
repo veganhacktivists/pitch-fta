@@ -27,17 +27,17 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ status }) => {
 
   return (
     <GuestLayout>
-      <Head title="Forgot Password" />
+      <Head title="Forgot Pin" />
 
       <div className="nes-container is-dark with-title">
-        <h2 className="title">Password reset</h2>
+        <h2 className="title">Pin reset</h2>
         <form
           onSubmit={onSubmit}
           className="mx-auto flex h-full flex-col gap-6"
         >
           <p>
-            Forgot your password? No problem! Type in your email address and we
-            will email you a password reset link.
+            Forgot your pin? No problem! Type in your email address and we will
+            email you a pin reset link.
           </p>
           <TextInput
             type="text"
@@ -50,7 +50,7 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ status }) => {
           <InputError message={errors.email} />
 
           <PrimaryButton disabled={processing}>
-            Email password reset link
+            Email pin reset link
           </PrimaryButton>
           {status && <div className="nes-text is-success">{status}</div>}
         </form>
