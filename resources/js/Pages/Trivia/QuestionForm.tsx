@@ -66,7 +66,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         <p className="text-sm">{question.text}</p>
       </div>
       {question.answers.map((answer) => (
-        <label className="px-4 leading-6" key={answer.id}>
+        <label className="px-10 leading-6" key={answer.id}>
           <RadioButton
             name="answer-dark"
             value={answer.id}

@@ -12,7 +12,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
   return (
     <input
       type="radio"
-      className={classNames('nes-radio is-dark h-0 w-0', className)}
+      className={classNames('nes-radio is-dark mr-0 h-0 w-0', className)}
       {...props}
     />
   )
