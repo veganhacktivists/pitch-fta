@@ -19,7 +19,7 @@ enum StrokeWidth {
 
 const DoodlesCreatePage = () => {
   const route = useRoute()
-  const { post, data, setData } = useForm<{ doodle: Blob | null }>({
+  const { post, data, setData, processing } = useForm<{ doodle: Blob | null }>({
     doodle: null,
   })
 
@@ -86,7 +86,7 @@ const DoodlesCreatePage = () => {
       backRoute="doodles.index"
       renderNav={() =>
         !isEmpty && (
-          <button type="submit" form="doodle-form">
+          <button type="submit" form="doodle-form" disabled={processing}>
             Submit
           </button>
         )

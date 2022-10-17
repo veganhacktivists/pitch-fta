@@ -107,7 +107,7 @@ export const VoteModal: React.FC<VoteModalProps> = ({
           </>
         )}
         {user.num_votes > 0 && (
-          <PrimaryButton>
+          <PrimaryButton disabled={processing}>
             Cast {data.num_votes} {data.num_votes === 1 ? 'vote' : 'votes'}
           </PrimaryButton>
         )}

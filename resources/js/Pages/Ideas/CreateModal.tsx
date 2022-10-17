@@ -27,7 +27,7 @@ export const CreateModal: React.FC<CreateModalProps> = ({
     },
   } = useTypedPage()
   const route = useRoute()
-  const { post, data, setData, errors, reset } = useForm({
+  const { post, data, setData, errors, reset, processing } = useForm({
     text: '',
   })
 
@@ -79,7 +79,9 @@ export const CreateModal: React.FC<CreateModalProps> = ({
               />
             </FormField>
             <InputError message={errors.text} />
-            <PrimaryButton type="submit">Submit</PrimaryButton>
+            <PrimaryButton type="submit" disabled={processing}>
+              Submit
+            </PrimaryButton>
             <p className="text-white">
               Note: Submitting a new idea will cost 1 vote!
             </p>
