@@ -17,17 +17,12 @@ body {
   touch-action: pan-y, pan-x;
 }
 
-.street {
-  background-position: top left;
-  background-image: url(/sprites/street.png);
-}
-
 .nes-container.is-dark {
-  @apply street;
+  @apply bg-stone-700;
 }
 
-.nes-container.is-dark .title {
-  @apply street;
+.nes-container.is-dark.with-title > .title {
+  @apply bg-stone-700;
 }
 
 .nes-radio:checked + span::before {

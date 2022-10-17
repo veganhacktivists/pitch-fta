@@ -24,7 +24,7 @@
         @vite('resources/js/app.tsx')
         @inertiaHead
     </head>
-    <body class="font-sans text-xs street">
+    <body class="font-sans text-xs bg-stone-700">
         @if (!$isMobile)
             <div class="mx-auto relative flex h-screen overflow-hidden max-w-lg" id="app-container">
                 @inertia

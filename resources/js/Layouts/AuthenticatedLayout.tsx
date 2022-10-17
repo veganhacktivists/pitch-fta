@@ -39,7 +39,7 @@ const AuthenticatedLayout: ParentComponent<AuthenticatedLayoutProps> = ({
     <SizeWatcher isFullScreen>
       {({ width, height }) => (
         <div
-          className="street flex flex-col overflow-hidden"
+          className="flex flex-col overflow-hidden bg-stone-700"
           style={{ width, height }}
         >
           <nav>

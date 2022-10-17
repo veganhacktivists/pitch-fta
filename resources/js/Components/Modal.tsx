@@ -51,7 +51,7 @@ export const Modal: ParentComponent<ModalProps> = ({
                   leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  <Dialog.Panel className="nes-dialog is-rounded street w-full text-left">
+                  <Dialog.Panel className="nes-dialog is-rounded w-full bg-stone-700 text-left">
                     {children}
                   </Dialog.Panel>
                 </Transition.Child>

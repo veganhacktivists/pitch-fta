@@ -10,7 +10,7 @@ export const GuestLayout: ParentComponent = ({ children }) => {
     <SizeWatcher isFullScreen>
       {({ width, height }) => (
         <div
-          className="street flex flex-col overflow-hidden"
+          className="flex flex-col overflow-hidden bg-stone-700"
           style={{ width, height }}
         >
           <main className="flex h-full flex-col overflow-auto pb-4">

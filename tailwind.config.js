@@ -13,6 +13,9 @@ module.exports = {
     extend: {
       colors: {
         'nes-dark': '#212529',
+        stone: {
+          700: '#444444',
+        },
       },
       fontFamily: {
         sans: ['"Press Start 2P"', ...defaultTheme.fontFamily.sans],
