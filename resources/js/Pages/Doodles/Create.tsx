@@ -112,7 +112,14 @@ const DoodlesCreatePage = () => {
         <div className="flex h-full w-full items-center justify-center">
           <div className="grid w-24 grid-cols-2 content-start gap-2 p-2">
             <button
-              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
+              className={classNames(
+                'rounded-2px grid aspect-square w-full place-items-center',
+                {
+                  'bg-white': isErasing || strokeWidth !== StrokeWidth.Pixel,
+                  'bg-gray-400':
+                    !isErasing && strokeWidth === StrokeWidth.Pixel,
+                },
+              )}
               type="button"
               onClick={() => onChangeStrokeWidth(StrokeWidth.Pixel)}
             >
@@ -124,7 +131,14 @@ const DoodlesCreatePage = () => {
               </span>
             </button>
             <button
-              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
+              className={classNames(
+                'rounded-2px grid aspect-square w-full place-items-center',
+                {
+                  'bg-white': isErasing || strokeWidth !== StrokeWidth.Small,
+                  'bg-gray-400':
+                    !isErasing && strokeWidth === StrokeWidth.Small,
+                },
+              )}
               type="button"
               onClick={() => onChangeStrokeWidth(StrokeWidth.Small)}
             >
@@ -136,7 +150,14 @@ const DoodlesCreatePage = () => {
               </span>
             </button>
             <button
-              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
+              className={classNames(
+                'rounded-2px grid aspect-square w-full place-items-center',
+                {
+                  'bg-white': isErasing || strokeWidth !== StrokeWidth.Medium,
+                  'bg-gray-400':
+                    !isErasing && strokeWidth === StrokeWidth.Medium,
+                },
+              )}
               type="button"
               onClick={() => onChangeStrokeWidth(StrokeWidth.Medium)}
             >
@@ -148,7 +169,14 @@ const DoodlesCreatePage = () => {
               </span>
             </button>
             <button
-              className="rounded-2px grid aspect-square w-full place-items-center bg-white"
+              className={classNames(
+                'rounded-2px grid aspect-square w-full place-items-center',
+                {
+                  'bg-white': isErasing || strokeWidth !== StrokeWidth.Large,
+                  'bg-gray-400':
+                    !isErasing && strokeWidth === StrokeWidth.Large,
+                },
+              )}
               type="button"
               onClick={() => onChangeStrokeWidth(StrokeWidth.Large)}
             >
