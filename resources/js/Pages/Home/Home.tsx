@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-import { Head } from '@inertiajs/inertia-react'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Head, useForm } from '@inertiajs/inertia-react'
 import classNames from 'classnames'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import useRoute from '@/Hooks/useRoute'
@@ -24,6 +24,7 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
     },
   } = useTypedPage()
   const route = useRoute()
+  const { post, processing } = useForm()
 
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
@@ -43,6 +44,17 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
       setIsShareModalOpen(true)
     }
   }, [route, setIsShareModalOpen, user.referral_code])
+
+  const isSubscribed = useMemo(() => {
+    const subscriberBadge = badges.find(
+      (badge) => badge.title === 'The Subscriber',
+    )
+    return subscriberBadge && hasBadge(user, subscriberBadge)
+  }, [badges, user])
+
+  const onSubscribe = useCallback(() => {
+    post(route('newsletter.subscribe'))
+  }, [post, route])
 
   const onClickBadge = useCallback((badge: Badge) => {
     setSelectedBadge(badge)
@@ -66,6 +78,15 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
           <ButtonLink href={route('trivia.question')}>Trivia</ButtonLink>
           <ButtonLink href={route('scan')}>Scan QR</ButtonLink>
           <Button onClick={onClickShare}>Share</Button>
+          {!isSubscribed && (
+            <Button
+              className="is-pink col-span-2"
+              onClick={onSubscribe}
+              disabled={processing}
+            >
+              Subscribe to newsletter
+            </Button>
+          )}
         </div>
         <div className="nes-container is-rounded is-dark with-title">
           <h2 className="title">Badges</h2>

@@ -9,6 +9,7 @@ import useRoute from '@/Hooks/useRoute'
 import { useSearchParams } from '@/Hooks/useSearchParams'
 import { FormField } from '@/Components/Forms/FormField'
 import { PasswordInput } from '@/Components/PasswordInput'
+import { Checkbox } from '@/Components/Forms/Checkbox'
 
 const RegisterPage = () => {
   const route = useRoute()
@@ -19,6 +20,7 @@ const RegisterPage = () => {
     email: searchParams.email,
     password: '',
     referrer: searchParams.referrer || localStorage.getItem('referrer'),
+    subscribe: true,
   })
 
   useEffect(() => {
@@ -31,6 +33,15 @@ const RegisterPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.referrer])
+
+  const onChangeSubscribe = useCallback<
+    React.ChangeEventHandler<HTMLInputElement>
+  >(
+    (e) => {
+      setData('subscribe', e.target.checked)
+    },
+    [setData],
+  )
 
   const onSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
     (e) => {
@@ -98,6 +109,20 @@ const RegisterPage = () => {
             <InputError message={errors.name} />
           </FormField>
 
+          <FormField>
+            <InputLabel>
+              <Checkbox
+                name="subscribe"
+                checked={data.subscribe}
+                onChange={onChangeSubscribe}
+              />
+              <span className="leading-6">
+                Subscribe to the Vegan Hacktivists newsletter
+              </span>
+            </InputLabel>
+
+            <InputError message={errors.name} />
+          </FormField>
           <PrimaryButton className="translate-x-[2px]">Register</PrimaryButton>
         </form>
       </div>

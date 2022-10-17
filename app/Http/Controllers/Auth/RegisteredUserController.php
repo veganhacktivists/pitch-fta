@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Newsletter\SubscribeUser;
+use App\Exceptions\Newsletter\NewsletterException;
 use App\Http\Controllers\Controller;
 use App\Models\Badge;
 use App\Models\User;
@@ -10,7 +12,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 class RegisteredUserController extends Controller
@@ -53,6 +54,14 @@ class RegisteredUserController extends Controller
 
                 $user->referrer_id = $referrer->id;
                 $user->save();
+            }
+        }
+
+        if ($request->input('subscribe')) {
+            try {
+                app(SubscribeUser::class)($user);
+            } catch (NewsletterException $e) {
+                // Ignore, already logged in SubscribeUser
             }
         }
 

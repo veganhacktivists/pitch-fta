@@ -12,7 +12,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={classNames(
-        'nes-btn',
+        'nes-btn bg-white',
         {
           'is-disabled': disabled,
         },

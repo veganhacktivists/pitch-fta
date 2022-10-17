@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\RouteUserBasedOnEmailController;
 use App\Http\Controllers\ScanQRCodeController;
+use App\Http\Controllers\SubscribeToNewsletterController;
 use App\Http\Controllers\TriviaController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/trivia', TriviaController::class)->name('trivia.question');
     Route::post('/trivia', TriviaController::class)->name('trivia.answer');
+
+    Route::post('/subscribe', SubscribeToNewsletterController::class)->name(
+        'newsletter.subscribe'
+    );
 
     Route::get('/scan', ScanQRCodeController::class)->name('scan');
     Route::match(

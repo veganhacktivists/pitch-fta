@@ -8,6 +8,7 @@ import {
   PrimaryButton,
   PrimaryButtonLink,
 } from '@/Components/Forms/PrimaryButton'
+import { RadioButton } from '@/Components/Forms/RadioButton'
 
 interface QuestionFormProps {
   question: TriviaQuestion
@@ -66,9 +67,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
       </div>
       {question.answers.map((answer) => (
         <label className="px-4 leading-6" key={answer.id}>
-          <input
-            type="radio"
-            className="nes-radio is-dark h-0 w-0"
+          <RadioButton
             name="answer-dark"
             value={answer.id}
             onChange={onSelectAnswer}
