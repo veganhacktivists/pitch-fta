@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Head, useForm } from '@inertiajs/inertia-react'
 import classNames from 'classnames'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
@@ -30,6 +30,15 @@ const HomePage: React.FC<HomePageProps> = ({ badges }) => {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
+
+  useEffect(() => {
+    badges.forEach((badge) => {
+      badge.tasks.forEach((task) => {
+        // Preload the task icons so the modal doesn't resize after being opened
+        new Image().src = task.icon_path
+      })
+    })
+  }, [badges])
 
   const onClickShare = useCallback(() => {
     const url = route('register', {
