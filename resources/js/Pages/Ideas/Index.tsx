@@ -100,6 +100,10 @@ const IdeasIndexPage: React.FC<IdeasIndexPageProps> = ({
               for an idea, tap on it. Choose wisely, your votes are limited and
               final!
             </p>
+            <p className="text-sm">
+              Note: You cannot see an idea's total number of votes. You can only
+              see how many times <em>you've</em> voted on an idea!
+            </p>
 
             <PrimaryButton onClick={onDismissInstructions} className="w-full">
               Continue
