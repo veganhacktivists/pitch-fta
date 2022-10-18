@@ -238,7 +238,7 @@ const DoodlesCreatePage = () => {
               </div>
             )}
           </SizeWatcher>
-          <div className="grid w-24 grid-cols-2 content-start justify-around gap-2 p-2">
+          <div className="grid w-36 grid-cols-3 content-start justify-around gap-2 p-2">
             <button
               type="button"
               className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-900"
@@ -252,6 +252,13 @@ const DoodlesCreatePage = () => {
               onClick={() => onChangeStrokeColor(colors.white)}
             >
               <span className="sr-only">White</span>
+            </button>
+            <button
+              type="button"
+              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-400"
+              onClick={() => onChangeStrokeColor(colors.gray[400])}
+            >
+              <span className="sr-only">Gray</span>
             </button>
             <button
               type="button"
@@ -316,15 +323,8 @@ const DoodlesCreatePage = () => {
             >
               <span className="sr-only">Brown</span>
             </button>
-            <button
-              type="button"
-              className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-400"
-              onClick={() => onChangeStrokeColor(colors.gray[400])}
-            >
-              <span className="sr-only">Gray</span>
-            </button>
             <label
-              className="rounded-2px col-span-2 h-6 w-full border border-gray-900 border-opacity-50"
+              className="rounded-2px col-span-3 h-6 w-full border border-gray-900 border-opacity-50"
               style={{ backgroundColor: strokeColor }}
             >
               <input className=" hidden " type="color" onChange={onPickColor} />
