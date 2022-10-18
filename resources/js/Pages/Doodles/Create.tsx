@@ -110,7 +110,7 @@ const DoodlesCreatePage = () => {
           </div>
         )}
         <div className="flex h-full w-full items-center justify-center">
-          <div className="grid w-24 grid-cols-2 content-start gap-2 p-2">
+          <div className="grid w-36 grid-cols-2 content-start gap-2 px-2 pr-2 pl-16">
             <button
               className={classNames(
                 'rounded-2px grid aspect-square w-full place-items-center',
@@ -222,7 +222,8 @@ const DoodlesCreatePage = () => {
               <img src="/sprites/x.png" alt="Clear" />
             </button>
           </div>
-          <SizeWatcher className="relative h-full w-full">
+
+          <SizeWatcher className="relative h-full flex-1">
             {({ height, width }) => (
               <div className="absolute inset-0 flex items-center justify-center">
                 <SketchCanvas
@@ -238,7 +239,7 @@ const DoodlesCreatePage = () => {
               </div>
             )}
           </SizeWatcher>
-          <div className="grid w-36 grid-cols-3 content-start justify-around gap-2 p-2">
+          <div className="grid w-32 grid-cols-3 content-start justify-around gap-2 p-2">
             <button
               type="button"
               className="rounded-2px aspect-square w-full border border-gray-900 border-opacity-80 bg-gray-900"
