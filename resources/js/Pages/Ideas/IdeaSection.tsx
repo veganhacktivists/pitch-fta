@@ -66,7 +66,7 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
               )}
               onClick={() => onClickIdea(idea)}
             >
-              <div className={`nes-balloon from-${alignment}`}>
+              <div className={`nes-balloon relative from-${alignment}`}>
                 <p className="[word-break:break-word]">{idea.text}</p>
 
                 {idea.votes_count > 0 && (
@@ -76,6 +76,27 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
                       alignment === 'right' && 'justify-end',
                     )}
                   >
+                    {i === 0 && (
+                      <img
+                        className="absolute -top-4 -left-4 h-6 w-6 -rotate-45"
+                        src="/sprites/crown-gold.svg"
+                        alt="First place"
+                      />
+                    )}
+                    {i === 1 && (
+                      <img
+                        className="absolute -top-4 -right-4 h-6 w-6 rotate-45"
+                        src="/sprites/crown-silver.svg"
+                        alt="Second place"
+                      />
+                    )}
+                    {i === 2 && (
+                      <img
+                        className="absolute -top-4 -left-4 h-6 w-6 -rotate-45"
+                        src="/sprites/crown-bronze.svg"
+                        alt="Third place"
+                      />
+                    )}
                     <i className="nes-icon is-small like" />
                     {idea.votes_count}
                   </p>
