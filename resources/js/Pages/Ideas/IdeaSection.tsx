@@ -71,10 +71,12 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
 
                 {idea.votes_count > 0 && (
                   <div className="mt-2 flex items-center gap-4">
-                    <p className="flex items-center">
-                      <i className="nes-icon is-small heart" />
-                      <span className="ml-1 inline-block">Yours</span>
-                    </p>
+                    {idea.user_id === user.id && (
+                      <p className="flex items-center">
+                        <i className="nes-icon is-small heart" />
+                        <span className="ml-1 inline-block">Yours</span>
+                      </p>
+                    )}
                     <p
                       className={classNames(
                         `flex items-center gap-1`,
