@@ -66,19 +66,25 @@ export const IdeaSection: React.FC<IdeaSectionProps> = ({
               )}
               onClick={() => onClickIdea(idea)}
             >
-              <div className={`nes-balloon relative from-${alignment}`}>
+              <div className={`nes-balloon relative px-4 from-${alignment}`}>
                 <p className="[word-break:break-word]">{idea.text}</p>
 
                 {idea.votes_count > 0 && (
-                  <p
-                    className={classNames(
-                      `mt-2 flex items-center gap-1`,
-                      alignment === 'right' && 'justify-end',
-                    )}
-                  >
-                    <i className="nes-icon is-small like" />
-                    {idea.votes_count}
-                  </p>
+                  <div className="mt-2 flex items-center gap-4">
+                    <p className="flex items-center">
+                      <i className="nes-icon is-small heart" />
+                      <span className="ml-1 inline-block">Yours</span>
+                    </p>
+                    <p
+                      className={classNames(
+                        `flex items-center gap-1`,
+                        alignment === 'right' && 'justify-end',
+                      )}
+                    >
+                      <i className="nes-icon is-small like" />
+                      {idea.votes_count}
+                    </p>
+                  </div>
                 )}
                 {i === 0 && (
                   <img
