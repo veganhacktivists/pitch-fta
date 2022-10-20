@@ -40,7 +40,7 @@ export const BadgeObtainedModal: React.FC<BadgeObtainedModalProps> = ({
               alt={badgeTask.title}
               className="w-1/5 max-w-[64px]"
             />
-            <p>{badgeTask.completion_message}</p>
+            <p className="flex-1">{badgeTask.completion_message}</p>
           </div>
         )}
         {!!progress && (
