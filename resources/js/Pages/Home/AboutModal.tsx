@@ -2,7 +2,6 @@ import React from 'react'
 import { Modal } from '@/Components/Modal'
 import { PrimaryButton } from '@/Components/Forms/PrimaryButton'
 import { ButtonLink } from '@/Components/Forms/Button'
-import colors from 'tailwindcss/colors'
 
 interface AboutModalProps {
   isOpen: boolean

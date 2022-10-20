@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Head } from '@inertiajs/inertia-react'
 import useRoute from '@/Hooks/useRoute'
 import { PrimaryButtonLink } from '@/Components/Forms/PrimaryButton'
 import { SizeWatcher } from '@/Components/SizeWatcher'
 import { ApplicationLogo } from '@/Components/ApplicationLogo'
+import { AboutModal } from './Home/AboutModal'
+import { Button } from '@/Components/Forms/Button'
 
 const WelcomePage = () => {
   const route = useRoute()
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
 
   return (
     <SizeWatcher isFullScreen>
       {({ width, height }) => (
         <div style={{ width, height }} className="flex flex-col overflow-auto">
           <Head title="Welcome" />
+          <div className="fixed top-2 right-2 w-12">
+            <Button onClick={() => setIsAboutModalOpen(true)}>?</Button>
+          </div>
           <div className="flex h-full flex-col items-center justify-center gap-4 bg-white py-4 text-center landscape:py-12">
             <img
               src="/sprites/logo-ava.svg"
@@ -86,6 +92,10 @@ const WelcomePage = () => {
               </div>
             </div>
           </div>
+          <AboutModal
+            isOpen={isAboutModalOpen}
+            setIsOpen={setIsAboutModalOpen}
+          />
         </div>
       )}
     </SizeWatcher>
