@@ -67,7 +67,7 @@ export const BadgeObtainedModal: React.FC<BadgeObtainedModalProps> = ({
                   alt={badge.title}
                   className="w-1/5 max-w-[64px]"
                 />
-                <p>{badge.completion_message}</p>
+                <p className="flex-1">{badge.completion_message}</p>
               </div>
             </div>
           </>
