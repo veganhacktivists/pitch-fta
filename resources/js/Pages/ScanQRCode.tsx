@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useForm } from '@inertiajs/inertia-react'
+import { Head, useForm } from '@inertiajs/inertia-react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import {
   QRCodeScanner,
@@ -108,6 +108,7 @@ const ScanQRCodePage = () => {
 
   return (
     <AuthenticatedLayout backRoute="home">
+      <Head title="Scan QR Code" />
       <SizeWatcher className="h-full w-full">
         {({ width, height }) => (
           <QRCodeScanner
