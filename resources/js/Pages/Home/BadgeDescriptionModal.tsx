@@ -38,7 +38,7 @@ export const BadgeDescriptionModal: React.FC<BadgeModalProps> = ({
               badge && !hasBadge(user, badge) && 'grayscale',
             )}
           />
-          <p>{badge?.description}</p>
+          <p className="flex-1">{badge?.description}</p>
         </div>
         {badge && badge.tasks.length > 1 && (
           <>
@@ -56,7 +56,7 @@ export const BadgeDescriptionModal: React.FC<BadgeModalProps> = ({
                   alt={badgeTask.title}
                   className="w-1/5 max-w-[64px] [image-rendering:auto]"
                 />
-                <p>{badgeTask.title}</p>
+                <p className="flex-1">{badgeTask.title}</p>
               </div>
             ))}
             {numCompletedTasks > 0 && (
